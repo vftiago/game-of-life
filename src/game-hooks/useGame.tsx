@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useInterval from "use-interval";
-import { getNextGrid, getRandomizedGrid, Grid } from "../game-utils";
 import { DEFAULT_INTERVAL } from "../game-utils/constants";
+import { getNextGrid, getRandomizedGrid, Grid } from "../game-utils/game-utils";
 
 const useGame = () => {
     const [isRunning, setIsRunning] = useState<boolean>(false);

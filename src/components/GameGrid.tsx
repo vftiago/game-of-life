@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
-import { Grid } from "../game-utils";
 import { DEFAULT_COLUMN_COUNT } from "../game-utils/constants";
+import { Grid } from "../game-utils/game-utils";
 import GameCell from "./GameCell";
 
 type GameGridProps = {

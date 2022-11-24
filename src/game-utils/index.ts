@@ -62,12 +62,12 @@ export const getLiveNeighbourCount = (
     return liveNeighboutCount;
 };
 
-export const updateGrid = (grid: Grid): Grid => {
+export const getNextGrid = (grid: Grid): Grid => {
     let newGrid = getGrid(grid.length, grid[0].length);
 
     grid.forEach((column, columnIndex) => {
         column.forEach((alive, rowIndex) => {
-            let liveNeighbourCount = getLiveNeighbourCount(
+            const liveNeighbourCount = getLiveNeighbourCount(
                 grid,
                 columnIndex,
                 rowIndex,

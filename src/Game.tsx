@@ -4,7 +4,7 @@ import GameHeader from "./components/GameHeader";
 import useGame from "./game-hooks/useGame";
 
 function Game() {
-    const { grid, stepNumber, reset, isRunning, setIsRunning, nextStep } =
+    const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
         useGame();
 
     const handleOnClickStartStop = () => {
@@ -12,7 +12,7 @@ function Game() {
     };
 
     const handleClickNext = () => {
-        nextStep();
+        next();
     };
 
     const handleClickReset = () => {

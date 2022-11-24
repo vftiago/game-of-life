@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import useInterval from "use-interval";
-import { getRandomizedGrid, Grid, updateGrid } from "../game-utils";
+import { getNextGrid, getRandomizedGrid, Grid } from "../game-utils";
 import { DEFAULT_INTERVAL } from "../game-utils/constants";
 
 const useGame = () => {
@@ -8,13 +8,9 @@ const useGame = () => {
     const [stepNumber, setStepNumber] = useState<number>(0);
     const [grid, setGrid] = useState<Grid>([]);
 
-    useEffect(() => {
-        reset();
-    }, []);
-
     useInterval(
         () => {
-            nextStep();
+            next();
         },
         isRunning ? DEFAULT_INTERVAL : null,
     );
@@ -25,18 +21,22 @@ const useGame = () => {
         setGrid(getRandomizedGrid());
     }, []);
 
-    const nextStep = useCallback(() => {
+    const next = useCallback(() => {
         setStepNumber(stepNumber + 1);
-        setGrid(updateGrid(grid));
+        setGrid(getNextGrid(grid));
     }, [grid, stepNumber]);
+
+    useEffect(() => {
+        reset();
+    }, [reset]);
 
     return {
         grid,
-        isRunning,
         stepNumber,
-        reset,
+        isRunning,
         setIsRunning,
-        nextStep,
+        next,
+        reset,
     };
 };
 

@@ -27,7 +27,9 @@ function Game() {
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
             />
-            <span className={stepNumberStyles}>{stepNumber}</span>
+            <span aria-label="Step Number" className={stepNumberStyles}>
+                {stepNumber}
+            </span>
             <GameGrid grid={grid} />
         </div>
     );

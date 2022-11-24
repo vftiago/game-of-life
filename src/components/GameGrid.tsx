@@ -11,7 +11,11 @@ const GameGrid = ({ grid }: GameGridProps) => {
     return (
         <div className={getGridStyles()}>
             {grid.map((column: boolean[], columnIndex: number) => (
-                <div className={columnStyles} key={columnIndex}>
+                <div
+                    className={columnStyles}
+                    key={columnIndex}
+                    data-testid="column"
+                >
                     {column.map((cell: boolean, rowIndex: number) => (
                         <GameCell
                             alive={cell}

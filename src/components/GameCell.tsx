@@ -5,11 +5,12 @@ type CellProps = {
 };
 
 const GameCell = ({ alive }: CellProps) => (
-    <div className={getCellStyles(alive)} />
+    <div className={getCellStyles(alive)} data-testid="cell" />
 );
 
 export default GameCell;
 
+// #region styles
 const getCellStyles = (alive: boolean) => {
     const backgroundColor = alive ? "silver" : "black";
 
@@ -19,3 +20,4 @@ const getCellStyles = (alive: boolean) => {
         width: 18px;
     `;
 };
+// #endregion styles

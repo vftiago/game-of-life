@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import { Grid } from "../game-utils";
 import { DEFAULT_COLUMN_COUNT } from "../game-utils/constants";
-import { Cell } from "./Cell";
+import GameCell from "./GameCell";
 
 type GameGridProps = {
     grid: Grid;
@@ -9,11 +9,11 @@ type GameGridProps = {
 
 const GameGrid = ({ grid }: GameGridProps) => {
     return (
-        <div className={getGameGridStyles()}>
+        <div className={getGridStyles()}>
             {grid.map((column: boolean[], columnIndex: number) => (
-                <div className={gameColumnStyles} key={columnIndex}>
+                <div className={columnStyles} key={columnIndex}>
                     {column.map((cell: boolean, rowIndex: number) => (
-                        <Cell
+                        <GameCell
                             alive={cell}
                             key={columnIndex.toString() + rowIndex.toString()}
                         />
@@ -26,15 +26,17 @@ const GameGrid = ({ grid }: GameGridProps) => {
 
 export default GameGrid;
 
-const gameColumnStyles = css`
+// #region styles
+const columnStyles = css`
     display: grid;
     gap: 2px;
 `;
 
-const getGameGridStyles = () => {
+const getGridStyles = () => {
     return css`
         display: grid;
         grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 18px);
         gap: 2px;
     `;
 };
+// #endregion styles

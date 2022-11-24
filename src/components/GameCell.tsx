@@ -4,9 +4,11 @@ type CellProps = {
     alive: boolean;
 };
 
-export const Cell = ({ alive }: CellProps) => (
+const GameCell = ({ alive }: CellProps) => (
     <div className={getCellStyles(alive)} />
 );
+
+export default GameCell;
 
 const getCellStyles = (alive: boolean) => {
     const backgroundColor = alive ? "silver" : "black";

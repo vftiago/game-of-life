@@ -1,7 +1,6 @@
 import { css } from "@emotion/css";
-import { FpsView } from "react-fps";
-import GameGrid from "./components/Grid";
-import { Header } from "./components/Header";
+import GameGrid from "./components/GameGrid";
+import GameHeader from "./components/GameHeader";
 import useGame from "./game-hooks/useGame";
 
 function Game() {
@@ -21,26 +20,39 @@ function Game() {
     };
 
     return (
-        <div className={gameOfLifeContainerStyles}>
-            <FpsView />
-            <Header
+        <div className={containerStyles}>
+            <GameHeader
                 isRunning={isRunning}
                 onClickStartStop={handleOnClickStartStop}
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
             />
-            <span>{stepNumber}</span>
+            <span className={stepNumberStyles}>{stepNumber}</span>
             <GameGrid grid={grid} />
         </div>
     );
 }
 
-const gameOfLifeContainerStyles = css`
-    min-height: 100vh;
+// #region styles
+const containerStyles = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 `;
+
+const stepNumberStyles = css`
+    font-family: "VT323", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: silver;
+    height: 24px;
+    width: 78px;
+    font-size: 1.6rem;
+    margin: 2px 0;
+`;
+// #endregion styles
 
 export default Game;

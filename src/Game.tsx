@@ -37,10 +37,13 @@ function Game() {
 
 // #region styles
 const containerStyles = css`
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #282c34;
+    color: white;
 `;
 
 const stepNumberStyles = css`

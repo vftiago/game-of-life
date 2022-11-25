@@ -3,7 +3,7 @@ import GameControls from "./components/GameControls";
 import GameGrid from "./components/GameGrid";
 import useGame from "./game-hooks/useGame";
 
-function Game() {
+const Game = () => {
     const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
         useGame();
 
@@ -35,7 +35,7 @@ function Game() {
             <GameGrid grid={grid} />
         </div>
     );
-}
+};
 
 // #region styles
 const containerStyles = css`

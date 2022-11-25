@@ -63,7 +63,7 @@ export const getLiveNeighbourCount = (
 };
 
 export const getNextGrid = (grid: Grid): Grid => {
-    let newGrid = getGrid(grid.length, grid[0].length);
+    const newGrid = getGrid(grid.length, grid[0].length);
 
     grid.forEach((column, columnIndex) => {
         column.forEach((alive, rowIndex) => {

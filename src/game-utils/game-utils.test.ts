@@ -12,9 +12,9 @@ describe("getGrid", () => {
         const grid = getGrid();
 
         expect(grid.length).toEqual(DEFAULT_COLUMN_COUNT);
-        for (let i = 0; i > grid.length; i++) {
+        for (let i = 0; i < grid.length; i++) {
             expect(grid[i].length).toEqual(DEFAULT_ROW_COUNT);
-            expect(grid[i].every((cell) => !cell));
+            expect(grid[i].every((cell) => !cell)).toBe(true);
         }
     });
 
@@ -22,9 +22,9 @@ describe("getGrid", () => {
         const grid = getGrid(1, 1);
 
         expect(grid.length).toEqual(1);
-        for (let i = 0; i > grid.length; i++) {
+        for (let i = 0; i < grid.length; i++) {
             expect(grid[i].length).toEqual(1);
-            expect(grid[i].every((cell) => !cell));
+            expect(grid[i].every((cell) => !cell)).toBe(true);
         }
     });
 });
@@ -34,9 +34,9 @@ describe("getRandomizedGrid", () => {
         const randomizedGrid = getRandomizedGrid();
 
         expect(randomizedGrid.length).toEqual(DEFAULT_COLUMN_COUNT);
-        for (let i = 0; i > randomizedGrid.length; i++) {
+        for (let i = 0; i < randomizedGrid.length; i++) {
             expect(randomizedGrid[i].length).toEqual(DEFAULT_ROW_COUNT);
-            expect(randomizedGrid[i].some((cell) => cell));
+            expect(randomizedGrid[i].some((cell) => cell)).toBe(true);
         }
     });
 });
@@ -80,7 +80,7 @@ describe("getNextGrid", () => {
 
         expect(nextGrid.length).toEqual(grid.length);
 
-        for (let i = 0; i > nextGrid.length; i++) {
+        for (let i = 0; i < nextGrid.length; i++) {
             expect(nextGrid[i].length).toEqual(grid[i].length);
         }
 

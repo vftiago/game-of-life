@@ -39,7 +39,7 @@ const columnStyles = css`
 const getGridStyles = () => {
     return css`
         display: grid;
-        grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 18px);
+        grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 1fr);
         gap: 2px;
     `;
 };

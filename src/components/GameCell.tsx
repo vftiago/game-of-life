@@ -1,4 +1,5 @@
 import { css } from "@emotion/css";
+import { DEFAULT_CELL_SIZE } from "../game-utils/constants";
 
 type CellProps = {
     alive: boolean;
@@ -14,10 +15,13 @@ export default GameCell;
 const getCellStyles = (alive: boolean) => {
     const backgroundColor = alive ? "silver" : "black";
 
+    const cellSize = `${DEFAULT_CELL_SIZE}px`;
+
     return css`
         background-color: ${backgroundColor};
-        height: 18px;
-        width: 18px;
+        height: ${cellSize};
+        width: ${cellSize};
+        border-radius: 15%;
     `;
 };
 // #endregion styles

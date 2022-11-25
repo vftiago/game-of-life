@@ -1,14 +1,14 @@
-import { render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, render, screen } from "@testing-library/react";
 import Game from "./Game";
 import {
     DEFAULT_COLUMN_COUNT,
-    DEFAULT_INTERVAL,
     DEFAULT_ROW_COUNT,
 } from "./game-utils/constants";
 
 describe("<Game />", () => {
     render(<Game />);
+
+    jest.useFakeTimers();
 
     it("should render all ui elements, working as expected", () => {
         const title = screen.getByText("Game of Life");
@@ -25,44 +25,49 @@ describe("<Game />", () => {
         expect(columns).toHaveLength(DEFAULT_COLUMN_COUNT);
         expect(cells).toHaveLength(DEFAULT_COLUMN_COUNT * DEFAULT_ROW_COUNT);
 
-        // initial step number should be zero
-        expect(stepNumber.textContent).toBe("0");
+        // the initial step number should be zero, and it should update as the user clicks next step
+        for (let i = 0; i < stepTestCount; i++) {
+            expect(stepNumber.textContent).toBe(i.toString());
 
-        for (let i = 1; i < stepTestCount; i++) {
             act(() => {
                 nextButton.click();
             });
-
-            // step number should update as the user clicks next step
-            expect(stepNumber.textContent).toBe(i.toString());
         }
 
+        // resetting the grid should bring the step number back down to zero
         act(() => {
             resetButton.click();
         });
 
-        // resetting the grid should bring the step number back down to zero
         expect(stepNumber.textContent).toBe("0");
 
+        // clicking play should increase the step number every time the default time interval has passed
         act(() => {
             playPauseButton.click();
         });
 
-        setTimeout(() => {
-            // clicking play should increase the step number every time the default time interval has passed
-            expect(stepNumber.textContent).toBe("1");
-        }, DEFAULT_INTERVAL + 1);
+        for (let i = 0; i < stepTestCount; i++) {
+            expect(stepNumber.textContent).toBe(i.toString());
 
+            act(() => {
+                jest.advanceTimersToNextTimer();
+            });
+        }
+
+        // clicking pause should then pause the game, keeping the step number at whatever it was before, no matter how much time has passed
         act(() => {
             playPauseButton.click();
         });
 
-        setTimeout(() => {
-            // clicking pause should then pause the game, keeping the step number at whatever it was before no matter how much time has passed
-            expect(stepNumber.textContent).toBe("1");
-        }, DEFAULT_INTERVAL + 1);
+        for (let i = 0; i < stepTestCount; i++) {
+            expect(stepNumber.textContent).toBe(stepTestCount.toString());
 
-        // none of the previous actions should have affected the coverall cell count
+            act(() => {
+                jest.advanceTimersToNextTimer();
+            });
+        }
+
+        // none of the previous actions should have affected the overall cell count
         expect(columns).toHaveLength(DEFAULT_COLUMN_COUNT);
         expect(cells).toHaveLength(DEFAULT_COLUMN_COUNT * DEFAULT_ROW_COUNT);
     });

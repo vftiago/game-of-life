@@ -1,26 +1,25 @@
 import { css } from "@emotion/css";
 
-type HeaderProps = {
+type GameControlsProps = {
     isRunning: boolean;
-    onClickStartStop: () => void;
+    onClickPlayPause: () => void;
     onClickNext: () => void;
     onClickReset: () => void;
 };
 
-const GameHeader = ({
+const GameControls = ({
     isRunning,
-    onClickStartStop,
+    onClickPlayPause,
     onClickNext,
     onClickReset,
-}: HeaderProps) => {
+}: GameControlsProps) => {
     return (
         <header className={headerStyles}>
-            <h1>Game of Life</h1>
             <div className={buttonContainerStyles}>
                 <button className={buttonStyles} onClick={onClickReset}>
                     Reset
                 </button>
-                <button className={playButtonStyles} onClick={onClickStartStop}>
+                <button className={playButtonStyles} onClick={onClickPlayPause}>
                     {isRunning ? "Pause" : "Play"}
                 </button>
                 <button className={buttonStyles} onClick={onClickNext}>
@@ -31,7 +30,7 @@ const GameHeader = ({
     );
 };
 
-export default GameHeader;
+export default GameControls;
 
 // #region styles
 const headerStyles = css`
@@ -40,12 +39,6 @@ const headerStyles = css`
     align-items: center;
     padding: 1rem 0;
     gap: 1rem;
-    h1 {
-        font-family: "Quando";
-        font-size: 2.4rem;
-        text-shadow: 2px 2px 2px black;
-        margin: 0;
-    }
 `;
 
 const buttonContainerStyles = css`
@@ -56,24 +49,25 @@ const buttonContainerStyles = css`
 `;
 
 const buttonStyles = css`
-    font-family: "VT323", monospace;
-    font-size: 1.3rem;
-    border: none;
-    width: 5rem;
-    height: 2rem;
-    cursor: pointer;
-    border-radius: 5%;
-    color: white;
-    text-shadow: -1px -1px black;
-    background-color: darkcyan;
-    box-shadow: 0 2px 0 black;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 5rem;
+    height: 2rem;
+    font-family: "VT323", monospace;
+    font-size: 1.3rem;
+    line-height: 0;
+    color: white;
+    text-shadow: -1px -1px rgb(0, 40, 40, 1);
+    background-color: rgba(0, 140, 140, 1);
+    box-shadow: 0 2px 0 rgba(0, 140, 140, 0.3);
+    border: none;
+    border-radius: 5%;
+    cursor: pointer;
     &:active {
         position: relative;
-        top: 1px;
-        box-shadow: 0 1px 0 black;
+        top: 2px;
+        box-shadow: 0 0 0;
     }
 `;
 

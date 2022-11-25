@@ -12,10 +12,10 @@ describe("<Game />", () => {
 
     it("should render all ui elements, working as expected", () => {
         const title = screen.getByText("Game of Life");
-        const playPauseButton = screen.getByText("Play");
-        const nextButton = screen.getByText("Next");
-        const resetButton = screen.getByText("Reset");
-        const stepNumber = screen.getByLabelText("Step Number");
+        const playPauseButton = screen.getByRole("button", { name: "Play" });
+        const nextButton = screen.getByRole("button", { name: "Next" });
+        const resetButton = screen.getByRole("button", { name: "Reset" });
+        const stepNumber = screen.getByTestId("step-number");
         const columns = screen.queryAllByTestId("column");
         const cells = screen.queryAllByTestId("cell");
         const stepTestCount = 5;

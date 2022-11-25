@@ -1,13 +1,13 @@
 import { css } from "@emotion/css";
+import GameControls from "./components/GameControls";
 import GameGrid from "./components/GameGrid";
-import GameHeader from "./components/GameHeader";
 import useGame from "./game-hooks/useGame";
 
 function Game() {
     const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
         useGame();
 
-    const handleOnClickStartStop = () => {
+    const handleOnClickPlayPause = () => {
         setIsRunning(!isRunning);
     };
 
@@ -21,15 +21,17 @@ function Game() {
 
     return (
         <div className={containerStyles}>
-            <GameHeader
+            <h1>Game of Life</h1>
+            <div className={stepNumberStyles}>
+                Step Number:&nbsp;
+                <span data-testid="step-number">{stepNumber}</span>
+            </div>
+            <GameControls
                 isRunning={isRunning}
-                onClickStartStop={handleOnClickStartStop}
+                onClickPlayPause={handleOnClickPlayPause}
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
             />
-            <span aria-label="Step Number" className={stepNumberStyles}>
-                {stepNumber}
-            </span>
             <GameGrid grid={grid} />
         </div>
     );
@@ -37,26 +39,27 @@ function Game() {
 
 // #region styles
 const containerStyles = css`
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: #282c34;
-    color: white;
+    background-color: rgb(40, 44, 52);
+    color: rgb(255, 255, 255);
+    gap: 4px;
+    h1 {
+        font-family: "Quando";
+        font-size: 2.4rem;
+        text-shadow: 2px 2px 2px black;
+        margin: 16px 0 0 0;
+    }
 `;
 
 const stepNumberStyles = css`
-    font-family: "VT323", monospace;
     display: flex;
+    font-family: monospace;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    color: silver;
-    height: 24px;
-    width: 78px;
-    font-size: 1.6rem;
-    margin: 2px 0;
+    font-size: 1rem;
 `;
 // #endregion styles
 

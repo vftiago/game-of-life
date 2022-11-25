@@ -1,11 +1,11 @@
 import { css } from "@emotion/css";
 import { DEFAULT_CELL_SIZE } from "../game-utils/constants";
 
-type CellProps = {
+type GameCellProps = {
     alive: boolean;
 };
 
-const GameCell = ({ alive }: CellProps) => (
+const GameCell = ({ alive }: GameCellProps) => (
     <div className={getCellStyles(alive)} data-testid="cell" />
 );
 

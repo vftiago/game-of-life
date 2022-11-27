@@ -24,10 +24,10 @@
         "prepare": "husky install",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "format": "prettier --write",
+        "format": "prettier --write .",
         "lint": "eslint .",
         "test": "react-scripts test",
-        "test:ci": "CI=true react-scripts test --findRelatedTests --bail",
+        "test:nowatch": "react-scripts test --watchAll=false --bail --findRelatedTests",
         "eject": "react-scripts eject"
     },
     "browserslist": {
@@ -50,7 +50,7 @@
         "prettier": "^2.8.0"
     },
     "lint-staged": {
-        "*.{ts,tsx}": ["npm run format", "npm run lint", "npm run test:ci"]
+        "**/*.{ts,tsx}": ["npm run format", "npm run lint", "npm run test:nowatch"]
     },
     "husky": {
         "hooks": {

@@ -33,6 +33,11 @@ const Game = () => {
                 onClickReset={handleClickReset}
             />
             <GameGrid grid={grid} />
+            <div className={footerStyles}>
+                <a href="https://github.com/vftiago/game-of-life">
+                    Github repository
+                </a>
+            </div>
         </div>
     );
 };
@@ -43,11 +48,12 @@ const containerStyles = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(40, 44, 52);
-    color: rgb(255, 255, 255);
+    background-color: rgb(128, 164, 200);
+    color: white;
     gap: 4px;
+    overflow-y: scroll;
+    font-family: "Quando";
     h1 {
-        font-family: "Quando";
         font-size: 2.4rem;
         text-shadow: 2px 2px 2px black;
         margin: 16px 0 0 0;
@@ -60,6 +66,14 @@ const stepNumberStyles = css`
     justify-content: center;
     align-items: center;
     font-size: 1rem;
+    text-shadow: 1px 1px 0px black;
+`;
+
+const footerStyles = css`
+    padding: 32px 16px;
+    a {
+        color: white;
+    }
 `;
 // #endregion styles
 

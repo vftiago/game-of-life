@@ -13,7 +13,7 @@ export default GameCell;
 
 // #region styles
 const getCellStyles = (alive: boolean) => {
-    const backgroundColor = alive ? "silver" : "black";
+    const backgroundColor = alive ? "black" : "white";
 
     const cellSize = `${DEFAULT_CELL_SIZE}px`;
 

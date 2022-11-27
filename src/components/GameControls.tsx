@@ -14,37 +14,28 @@ const GameControls = ({
     onClickReset,
 }: GameControlsProps) => {
     return (
-        <header className={headerStyles}>
-            <div className={buttonContainerStyles}>
-                <button className={buttonStyles} onClick={onClickReset}>
-                    Reset
-                </button>
-                <button className={playButtonStyles} onClick={onClickPlayPause}>
-                    {isRunning ? "Pause" : "Play"}
-                </button>
-                <button className={buttonStyles} onClick={onClickNext}>
-                    Next
-                </button>
-            </div>
-        </header>
+        <div className={buttonContainerStyles}>
+            <button className={buttonStyles} onClick={onClickReset}>
+                Reset
+            </button>
+            <button className={playButtonStyles} onClick={onClickPlayPause}>
+                {isRunning ? "Pause" : "Play"}
+            </button>
+            <button className={buttonStyles} onClick={onClickNext}>
+                Next
+            </button>
+        </div>
     );
 };
 
 export default GameControls;
 
 // #region styles
-const headerStyles = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-    gap: 1rem;
-`;
-
 const buttonContainerStyles = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 0;
     gap: 2rem;
 `;
 

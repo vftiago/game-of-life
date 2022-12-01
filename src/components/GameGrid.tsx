@@ -33,14 +33,14 @@ export default GameGrid;
 // #region styles
 const columnStyles = css`
     display: grid;
-    gap: 2px;
+    gap: 1px;
 `;
 
 const getGridStyles = () => {
     return css`
         display: grid;
         grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 1fr);
-        gap: 2px;
+        gap: 1px;
     `;
 };
 // #endregion styles

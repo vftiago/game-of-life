@@ -22,9 +22,12 @@ export const getRandomizedGrid = (
     rowCount: number = DEFAULT_ROW_COUNT,
 ): Grid => {
     const grid = getGrid(columnCount, rowCount);
-    return grid.map((column) =>
+    const randomizedGrid = grid.map((column) =>
         column.map(() => Math.random() < DEFAULT_DENSITY),
     );
+
+    // make the initial state slightly more interesting
+    return getNextGrid(randomizedGrid);
 };
 
 export const getLiveNeighbourCount = (

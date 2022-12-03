@@ -50,11 +50,15 @@
         "prettier": "^2.8.0"
     },
     "lint-staged": {
-        "**/*.{ts,tsx}": ["npm run format", "npm run lint", "npm run test:nowatch"]
+        "**/*.{ts,tsx}": [
+            "npm run format",
+            "npm run lint",
+            "npm run test:nowatch"
+        ]
     },
     "husky": {
         "hooks": {
-          "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged"
         }
-      }
+    }
 }

@@ -23,7 +23,7 @@ export const getRandomizedGrid = (
 ): Grid => {
     const grid = getGrid(columnCount, rowCount);
     return grid.map((column) =>
-        column.map(() => Math.random() > DEFAULT_DENSITY),
+        column.map(() => Math.random() < DEFAULT_DENSITY),
     );
 };
 

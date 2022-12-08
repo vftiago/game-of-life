@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import Game from "./Game";
 import {
     DEFAULT_COLUMN_COUNT,
@@ -28,23 +28,16 @@ describe("<Game />", () => {
         // the initial step number should be zero, and it should update as the user clicks next step
         for (let i = 0; i < stepTestCount; i++) {
             expect(stepNumber.textContent).toBe(i.toString());
-
-            act(() => {
-                nextButton.click();
-            });
+            fireEvent.click(nextButton);
         }
 
         // resetting the grid should bring the step number back down to zero
-        act(() => {
-            resetButton.click();
-        });
+        fireEvent.click(resetButton);
 
         expect(stepNumber.textContent).toBe("0");
 
         // clicking play should increase the step number every time the default time interval has passed
-        act(() => {
-            playPauseButton.click();
-        });
+        fireEvent.click(playPauseButton);
 
         for (let i = 0; i < stepTestCount; i++) {
             expect(stepNumber.textContent).toBe(i.toString());
@@ -55,9 +48,7 @@ describe("<Game />", () => {
         }
 
         // clicking pause should then pause the game, keeping the step number at whatever it was before, no matter how much time has passed
-        act(() => {
-            playPauseButton.click();
-        });
+        fireEvent.click(playPauseButton);
 
         for (let i = 0; i < stepTestCount; i++) {
             expect(stepNumber.textContent).toBe(stepTestCount.toString());

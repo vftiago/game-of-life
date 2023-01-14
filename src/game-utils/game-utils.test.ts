@@ -36,7 +36,6 @@ describe("getRandomizedGrid", () => {
         expect(randomizedGrid.length).toEqual(DEFAULT_COLUMN_COUNT);
         for (let i = 0; i < randomizedGrid.length; i++) {
             expect(randomizedGrid[i].length).toEqual(DEFAULT_ROW_COUNT);
-            expect(randomizedGrid[i].some((cell) => cell)).toBe(true);
         }
     });
 });

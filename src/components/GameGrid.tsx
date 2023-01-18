@@ -1,18 +1,25 @@
+import { useColorMode } from "@chakra-ui/react";
 import { css } from "@emotion/css";
-import {
-    DEFAULT_CELL_SIZE,
-    DEFAULT_COLUMN_COUNT,
-} from "../game-utils/constants";
+import { DEFAULT_CELL_SIZE } from "../game-utils/constants";
 import { Grid } from "../game-utils/game-utils";
 import GameCell from "./GameCell";
 
 type GameGridProps = {
+    columnCount: number;
+    rowCount: number;
     grid: Grid;
 };
 
-const GameGrid = ({ grid }: GameGridProps) => {
+const GameGrid = ({ columnCount, grid }: GameGridProps) => {
+    const { colorMode } = useColorMode();
+
+    const getBackgroundColor = (alive: boolean) => {
+        if (colorMode === "light") return alive ? "#1A202C" : "white";
+        return alive ? "white" : "#1A202C";
+    };
+
     return (
-        <div className={gridStyles}>
+        <div className={gridStyles(columnCount)}>
             {grid.map((column: boolean[], columnIndex: number) => (
                 <ul
                     className={columnStyles}
@@ -21,7 +28,7 @@ const GameGrid = ({ grid }: GameGridProps) => {
                 >
                     {column.map((cell: boolean, rowIndex: number) => (
                         <GameCell
-                            alive={cell}
+                            backgroundColor={getBackgroundColor(cell)}
                             key={columnIndex.toString() + rowIndex.toString()}
                         />
                     ))}
@@ -48,9 +55,9 @@ const columnStyles = css`
     }
 `;
 
-const gridStyles = css`
+const gridStyles = (columnCount: number) => css`
     display: grid;
-    grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 1fr);
+    grid-template-columns: repeat(${columnCount}, 1fr);
     gap: 1px;
 `;
 // #endregion styles

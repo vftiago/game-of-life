@@ -1,14 +1,16 @@
 type GameCellProps = {
-    alive: boolean;
+    backgroundColor: string;
 };
 
-const GameCell = ({ alive }: GameCellProps) => (
-    <li
-        style={{
-            backgroundColor: alive ? "black" : "white",
-        }}
-        data-testid="cell"
-    />
-);
+const GameCell = ({ backgroundColor }: GameCellProps) => {
+    return (
+        <li
+            style={{
+                backgroundColor,
+            }}
+            data-testid="cell"
+        />
+    );
+};
 
 export default GameCell;

@@ -1,9 +1,12 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { Button, Divider, Heading, Stack } from "@chakra-ui/react";
+import { Divider, Stack } from "@chakra-ui/react";
+import { useRef, useState } from "react";
+
 import GameControls from "./components/GameControls";
 import GameGrid from "./components/GameGrid";
+import GameSettings from "./components/GameSettings";
 import useGame from "./game-hooks/useGame";
 import useUserSettings from "./game-hooks/useUserSettings";
+import GameHeader from "./components/GameHeader";
 
 const Game = () => {
     const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
@@ -11,6 +14,10 @@ const Game = () => {
 
     const { columnCount, rowCount, setColumnCount, setRowCount } =
         useUserSettings();
+
+    const [isGameSettingsOpen, setIsGameSettingsOpen] = useState(false);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const handleOnClickPlayPause = () => {
         setIsRunning(!isRunning);
@@ -36,28 +43,36 @@ const Game = () => {
 
     return (
         <Stack direction="column" alignItems="center">
-            <Heading as="h1">Game of Life</Heading>
-            <a href="https://github.com/vftiago/game-of-life">
-                <Button leftIcon={<StarIcon />} colorScheme="gray" size="sm">
-                    Github
-                </Button>
-            </a>
-            <Divider />
-            <GameControls
+            <GameSettings
+                buttonRef={buttonRef}
+                isOpen={isGameSettingsOpen}
                 columnCount={columnCount}
                 rowCount={rowCount}
-                stepNumber={stepNumber}
+                onClose={() => {
+                    setIsGameSettingsOpen(false);
+                }}
+                onSelectColumnCount={handleSelectColumnCount}
+                onSelectRowCount={handleSelectRowCount}
+            />
+            <GameHeader
+                buttonRef={buttonRef}
+                isRunning={isRunning}
+                onClickSettingsDrawerSwitcher={() => {
+                    setIsGameSettingsOpen(!isGameSettingsOpen);
+                }}
+            />
+            <Divider />
+            <GameControls
                 isRunning={isRunning}
                 onClickPlayPause={handleOnClickPlayPause}
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
-                onSelectColumnCount={handleSelectColumnCount}
-                onSelectRowCount={handleSelectRowCount}
             />
             <Divider />
             <GameGrid
                 columnCount={columnCount}
                 rowCount={rowCount}
+                stepNumber={stepNumber}
                 grid={grid}
             />
         </Stack>

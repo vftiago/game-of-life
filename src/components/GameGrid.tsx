@@ -24,7 +24,6 @@ const GameGridC = ({
     stepNumber,
     cellType,
 }: GameGridProps) => {
-    console.log("GameGridC called");
     const { colorMode } = useColorMode();
 
     const getBackgroundColor = (alive: boolean) => {

@@ -1,19 +1,19 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
-import { RefObject } from "react";
+import { memo, RefObject } from "react";
 import ColorModeSwitcher from "./ColorModeSwitcher";
 import SettingsDrawerSwitcher from "./SettingsDrawerSwitcher";
 
 type GameHeaderProps = {
     buttonRef: RefObject<HTMLButtonElement>;
     isRunning: boolean;
-    onClickSettingsDrawerSwitcher: () => void;
+    onOpenSettingsMenu: () => void;
 };
 
 const GameHeader = ({
     buttonRef,
     isRunning,
-    onClickSettingsDrawerSwitcher,
+    onOpenSettingsMenu,
 }: GameHeaderProps) => {
     return (
         <Flex
@@ -25,7 +25,7 @@ const GameHeader = ({
             <SettingsDrawerSwitcher
                 buttonRef={buttonRef}
                 isRunning={isRunning}
-                onClick={onClickSettingsDrawerSwitcher}
+                onClick={onOpenSettingsMenu}
             />
             <Stack direction="column" alignItems="center">
                 <Heading as="h1">Game of Life</Heading>
@@ -44,4 +44,8 @@ const GameHeader = ({
     );
 };
 
-export default GameHeader;
+const MemoizedGameHeader = memo((props: GameHeaderProps) => (
+    <GameHeader {...props} />
+));
+
+export default MemoizedGameHeader;

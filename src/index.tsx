@@ -14,8 +14,10 @@ const {
     Divider,
     Drawer,
     Heading,
+    Radio,
     Select,
     Stat,
+    Tooltip,
 } = chakraTheme.components;
 
 const theme = extendBaseTheme({
@@ -35,8 +37,10 @@ const theme = extendBaseTheme({
         Divider,
         Drawer,
         Heading,
+        Radio,
         Select,
         Stat,
+        Tooltip,
     },
 });
 

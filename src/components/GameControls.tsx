@@ -1,4 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
+import { memo } from "react";
 
 type GameControlsProps = {
     isRunning: boolean;
@@ -29,4 +30,8 @@ const GameControls = ({
     );
 };
 
-export default GameControls;
+const MemoizedGameControls = memo((props: GameControlsProps) => (
+    <GameControls {...props} />
+));
+
+export default MemoizedGameControls;

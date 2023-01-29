@@ -1,80 +1,108 @@
-import { css } from "@emotion/css";
-import GameControls from "./components/GameControls";
-import GameGrid from "./components/GameGrid";
+import { Divider, Stack } from "@chakra-ui/react";
+import { useCallback, useRef, useState } from "react";
+
+import MemoizedGameControls from "./components/GameControls";
+import MemoizedGameSettings from "./components/GameSettings";
 import useGame from "./game-hooks/useGame";
+import useUserSettings from "./game-hooks/useUserSettings";
+import MemoizedGameHeader from "./components/GameHeader";
+import { CellType } from "./game-utils/constants";
+import MemoizedGameGrid from "./components/GameGrid";
 
 const Game = () => {
     const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
         useGame();
 
-    const handleOnClickPlayPause = () => {
+    const {
+        columnCount,
+        rowCount,
+        cellType,
+        setColumnCount,
+        setRowCount,
+        setCellType,
+    } = useUserSettings();
+
+    const [isGameSettingsOpen, setIsGameSettingsOpen] = useState(false);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const handleClickPlayPause = useCallback(() => {
         setIsRunning(!isRunning);
-    };
+    }, [isRunning, setIsRunning]);
 
-    const handleClickNext = () => {
+    const handleClickNext = useCallback(() => {
         next();
-    };
+    }, [next]);
 
-    const handleClickReset = () => {
-        reset();
-    };
+    const handleClickReset = useCallback(() => {
+        reset(columnCount, rowCount);
+    }, [reset, columnCount, rowCount]);
+
+    const handleSelectColumnCount = useCallback(
+        (selection: number) => {
+            setColumnCount(selection);
+            reset(selection, rowCount);
+        },
+        [rowCount, setColumnCount, reset],
+    );
+
+    const handleSelectRowCount = useCallback(
+        (selection: number) => {
+            setRowCount(selection);
+            reset(columnCount, selection);
+        },
+        [columnCount, setRowCount, reset],
+    );
+
+    const handleSelectCellType = useCallback(
+        (selection: CellType) => {
+            setCellType(selection);
+        },
+        [setCellType],
+    );
+
+    const handleOpenSettingsMenu = useCallback(() => {
+        setIsGameSettingsOpen(!isGameSettingsOpen);
+    }, [isGameSettingsOpen, setIsGameSettingsOpen]);
+
+    const handleCloseSettingsMenu = useCallback(() => {
+        setIsGameSettingsOpen(false);
+    }, []);
 
     return (
-        <div className={containerStyles}>
-            <h1>Game of Life</h1>
-            <div className={stepNumberStyles}>
-                Step Number:&nbsp;
-                <span data-testid="step-number">{stepNumber}</span>
-            </div>
-            <GameControls
+        <Stack direction="column" alignItems="center">
+            <MemoizedGameSettings
+                buttonRef={buttonRef}
+                isOpen={isGameSettingsOpen}
+                columnCount={columnCount}
+                rowCount={rowCount}
+                cellType={cellType}
+                onClose={handleCloseSettingsMenu}
+                onSelectColumnCount={handleSelectColumnCount}
+                onSelectRowCount={handleSelectRowCount}
+                onSelectCellType={handleSelectCellType}
+            />
+            <MemoizedGameHeader
+                buttonRef={buttonRef}
                 isRunning={isRunning}
-                onClickPlayPause={handleOnClickPlayPause}
+                onOpenSettingsMenu={handleOpenSettingsMenu}
+            />
+            <Divider />
+            <MemoizedGameControls
+                isRunning={isRunning}
+                onClickPlayPause={handleClickPlayPause}
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
             />
-            <GameGrid grid={grid} />
-            <div className={footerStyles}>
-                <a href="https://github.com/vftiago/game-of-life">
-                    Github repository
-                </a>
-            </div>
-        </div>
+            <Divider />
+            <MemoizedGameGrid
+                columnCount={columnCount}
+                stepNumber={stepNumber}
+                cellType={cellType}
+                grid={grid}
+            />
+        </Stack>
     );
 };
-
-// #region styles
-const containerStyles = css`
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(128, 164, 200);
-    color: white;
-    gap: 4px;
-    overflow-y: scroll;
-    font-family: "Quando";
-    h1 {
-        font-size: 2.4rem;
-        text-shadow: 2px 2px 2px black;
-        margin: 16px 0 0 0;
-    }
-`;
-
-const stepNumberStyles = css`
-    display: flex;
-    font-family: monospace;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    text-shadow: 1px 1px 0px black;
-`;
-
-const footerStyles = css`
-    padding: 32px 16px;
-    a {
-        color: white;
-    }
-`;
-// #endregion styles
 
 export default Game;

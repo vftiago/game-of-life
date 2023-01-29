@@ -1,56 +1,81 @@
-import { css } from "@emotion/css";
 import {
-    DEFAULT_CELL_SIZE,
-    DEFAULT_COLUMN_COUNT,
-} from "../game-utils/constants";
-import { Grid } from "../game-utils/game-utils";
-import GameCell from "./GameCell";
+    Flex,
+    Grid,
+    Stack,
+    Stat,
+    StatLabel,
+    StatNumber,
+    useColorMode,
+} from "@chakra-ui/react";
+import { memo } from "react";
+import { DEFAULT_CELL_SIZE } from "../game-utils/constants";
+import { GameGrid } from "../game-utils/game-utils";
 
 type GameGridProps = {
-    grid: Grid;
+    columnCount: number;
+    stepNumber: number;
+    cellType: "dot" | "square";
+    grid: GameGrid;
 };
 
-const GameGrid = ({ grid }: GameGridProps) => {
+const GameGridC = ({
+    columnCount,
+    grid,
+    stepNumber,
+    cellType,
+}: GameGridProps) => {
+    console.log("GameGridC called");
+    const { colorMode } = useColorMode();
+
+    const getBackgroundColor = (alive: boolean) => {
+        if (colorMode === "light") return alive ? "#1A202C" : "white";
+        return alive ? "white" : "#1A202C";
+    };
+
     return (
-        <div className={gridStyles}>
-            {grid.map((column: boolean[], columnIndex: number) => (
-                <ul
-                    className={columnStyles}
-                    key={columnIndex}
-                    data-testid="column"
-                >
-                    {column.map((cell: boolean, rowIndex: number) => (
-                        <GameCell
-                            alive={cell}
-                            key={columnIndex.toString() + rowIndex.toString()}
-                        />
-                    ))}
-                </ul>
-            ))}
-        </div>
+        <Stack>
+            <Flex>
+                <Stat>
+                    <StatLabel>Step</StatLabel>
+                    <StatNumber data-testid="step-number">
+                        {stepNumber}
+                    </StatNumber>
+                </Stat>
+            </Flex>
+            <Grid gridTemplateColumns={`repeat(${columnCount}, 1fr)`} gap="1px">
+                {grid.map((column: boolean[], columnIndex: number) => (
+                    <Flex
+                        direction="column"
+                        gap="1px"
+                        key={columnIndex}
+                        data-testid="column"
+                    >
+                        {column.map((cell: boolean, rowIndex: number) => (
+                            <div
+                                // we're styling cells inline performance reasons:
+                                // https://emotion.sh/docs/performance
+                                style={{
+                                    backgroundColor: getBackgroundColor(cell),
+                                    borderRadius:
+                                        cellType === "dot" ? "50%" : "15%",
+                                    height: `${DEFAULT_CELL_SIZE}px`,
+                                    width: `${DEFAULT_CELL_SIZE}px`,
+                                }}
+                                data-testid="cell"
+                                key={
+                                    columnIndex.toString() + rowIndex.toString()
+                                }
+                            />
+                        ))}
+                    </Flex>
+                ))}
+            </Grid>
+        </Stack>
     );
 };
 
-export default GameGrid;
+const MemoizedGameGrid = memo((props: GameGridProps) => (
+    <GameGridC {...props} />
+));
 
-// #region styles
-const columnStyles = css`
-    display: grid;
-    gap: 1px;
-    padding: 0;
-    // we're styling cells on the parent level for performance reasons:
-    // https://emotion.sh/docs/performance
-    li {
-        list-style: none;
-        height: ${`${DEFAULT_CELL_SIZE}px`};
-        width: ${`${DEFAULT_CELL_SIZE}px`};
-        border-radius: 15%;
-    }
-`;
-
-const gridStyles = css`
-    display: grid;
-    grid-template-columns: repeat(${DEFAULT_COLUMN_COUNT}, 1fr);
-    gap: 1px;
-`;
-// #endregion styles
+export default MemoizedGameGrid;

@@ -4,7 +4,7 @@ import {
     DEFAULT_ROW_COUNT,
 } from "./constants";
 
-export type Grid = boolean[][];
+export type GameGrid = boolean[][];
 
 const getFilledArray = (length: number) => {
     return new Array(length).fill(false);
@@ -13,14 +13,14 @@ const getFilledArray = (length: number) => {
 export const getGrid = (
     columnCount: number = DEFAULT_COLUMN_COUNT,
     rowCount: number = DEFAULT_ROW_COUNT,
-): Grid => {
+): GameGrid => {
     return getFilledArray(columnCount).map(() => getFilledArray(rowCount));
 };
 
 export const getRandomizedGrid = (
     columnCount: number = DEFAULT_COLUMN_COUNT,
     rowCount: number = DEFAULT_ROW_COUNT,
-): Grid => {
+): GameGrid => {
     const grid = getGrid(columnCount, rowCount);
     const randomizedGrid = grid.map((column) =>
         column.map(() => Math.random() < DEFAULT_DENSITY),
@@ -31,7 +31,7 @@ export const getRandomizedGrid = (
 };
 
 export const getLiveNeighbourCount = (
-    grid: Grid,
+    grid: GameGrid,
     columnIndex: number,
     rowIndex: number,
 ): number => {
@@ -65,7 +65,7 @@ export const getLiveNeighbourCount = (
     return liveNeighboutCount;
 };
 
-export const getNextGrid = (grid: Grid): Grid => {
+export const getNextGrid = (grid: GameGrid): GameGrid => {
     const newGrid = getGrid(grid.length, grid[0].length);
 
     grid.forEach((column, columnIndex) => {

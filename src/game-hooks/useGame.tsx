@@ -40,6 +40,7 @@ const useGame = () => {
         grid,
         stepNumber,
         isRunning,
+        setGrid,
         setIsRunning,
         next,
         reset,

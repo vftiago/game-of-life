@@ -16,6 +16,7 @@ type GameGridProps = {
     stepNumber: number;
     cellType: "dot" | "square";
     grid: GameGrid;
+    onClickCell: (columnCount: number, rowIndex: number, cell: boolean) => void;
 };
 
 const GameGridC = ({
@@ -23,6 +24,7 @@ const GameGridC = ({
     grid,
     stepNumber,
     cellType,
+    onClickCell,
 }: GameGridProps) => {
     const { colorMode } = useColorMode();
 
@@ -53,6 +55,9 @@ const GameGridC = ({
                             <div
                                 // we're styling cells inline performance reasons:
                                 // https://emotion.sh/docs/performance
+                                onClick={() => {
+                                    onClickCell(columnIndex, rowIndex, cell);
+                                }}
                                 style={{
                                     backgroundColor: getBackgroundColor(cell),
                                     borderRadius:

@@ -10,7 +10,7 @@ import { CellType } from "./game-utils/constants";
 import MemoizedGameGrid from "./components/GameGrid";
 
 const Game = () => {
-    const { grid, stepNumber, isRunning, setIsRunning, next, reset } =
+    const { grid, stepNumber, isRunning, setGrid, setIsRunning, next, reset } =
         useGame();
 
     const {
@@ -37,6 +37,15 @@ const Game = () => {
     const handleClickReset = useCallback(() => {
         reset(columnCount, rowCount);
     }, [reset, columnCount, rowCount]);
+
+    const handleClickCell = useCallback(
+        (columnIndex: number, rowIndex: number, alive: boolean) => {
+            const newGrid = [...grid];
+            newGrid[columnIndex][rowIndex] = !alive;
+            setGrid(newGrid);
+        },
+        [grid, setGrid],
+    );
 
     const handleSelectColumnCount = useCallback(
         (selection: number) => {
@@ -100,6 +109,7 @@ const Game = () => {
                 stepNumber={stepNumber}
                 cellType={cellType}
                 grid={grid}
+                onClickCell={handleClickCell}
             />
         </Stack>
     );

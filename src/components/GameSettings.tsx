@@ -53,6 +53,7 @@ const GameSettings = ({
                 <DrawerHeader>Game settings</DrawerHeader>
                 <DrawerBody>
                     <Stack gap="2rem">
+                        <p>Opening the settings menu will pause the game.</p>
                         <Stack>
                             <Flex align="center" justifyContent="space-between">
                                 <p>Columns:</p>

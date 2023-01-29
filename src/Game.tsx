@@ -71,8 +71,9 @@ const Game = () => {
     );
 
     const handleOpenSettingsMenu = useCallback(() => {
-        setIsGameSettingsOpen(!isGameSettingsOpen);
-    }, [isGameSettingsOpen, setIsGameSettingsOpen]);
+        setIsGameSettingsOpen(true);
+        setIsRunning(false);
+    }, [setIsGameSettingsOpen, setIsRunning]);
 
     const handleCloseSettingsMenu = useCallback(() => {
         setIsGameSettingsOpen(false);
@@ -93,7 +94,6 @@ const Game = () => {
             />
             <MemoizedGameHeader
                 buttonRef={buttonRef}
-                isRunning={isRunning}
                 onOpenSettingsMenu={handleOpenSettingsMenu}
             />
             <Divider />

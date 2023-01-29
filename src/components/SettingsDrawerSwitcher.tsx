@@ -4,19 +4,16 @@ import { RefObject } from "react";
 
 type SettingsMenuSwitcherProps = {
     buttonRef: RefObject<HTMLButtonElement>;
-    isRunning: boolean;
     onClick: () => void;
 };
 
 export const SettingsDrawerSwitcher = ({
     buttonRef,
-    isRunning,
     onClick,
 }: SettingsMenuSwitcherProps) => {
     return (
         <IconButton
             ref={buttonRef}
-            disabled={isRunning}
             colorScheme={"gray"}
             onClick={onClick}
             icon={<HamburgerIcon />}

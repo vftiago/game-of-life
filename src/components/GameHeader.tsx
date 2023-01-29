@@ -6,15 +6,10 @@ import SettingsDrawerSwitcher from "./SettingsDrawerSwitcher";
 
 type GameHeaderProps = {
     buttonRef: RefObject<HTMLButtonElement>;
-    isRunning: boolean;
     onOpenSettingsMenu: () => void;
 };
 
-const GameHeader = ({
-    buttonRef,
-    isRunning,
-    onOpenSettingsMenu,
-}: GameHeaderProps) => {
+const GameHeader = ({ buttonRef, onOpenSettingsMenu }: GameHeaderProps) => {
     return (
         <Flex
             width="100%"
@@ -24,7 +19,6 @@ const GameHeader = ({
         >
             <SettingsDrawerSwitcher
                 buttonRef={buttonRef}
-                isRunning={isRunning}
                 onClick={onOpenSettingsMenu}
             />
             <Stack direction="column" alignItems="center">

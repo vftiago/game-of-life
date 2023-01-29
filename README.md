@@ -11,7 +11,7 @@ At each step, the following transitions occur:
 
 The rules are applied indefinitely, creating new board states at every step or tick.
 
-You can check it live here: [https://goldfish-app-ulkts.ondigitalocean.app/](https://goldfish-app-ulkts.ondigitalocean.app/)
+You can check it live here: [https://game-of-life.vftiago.com/](https://game-of-life.vftiago.com/)
 
 ## Run the project locally
 
@@ -76,11 +76,9 @@ The following features could potentially increase the app's usability at little 
 
 -   Allow users to set up an initial board state by clicking each individual `Cell` to change its state to `dead` or `alive`.
     -   As a follow-up, allow users to clear the board as well (set all cells to `dead`).
--   Allow users to change the arraw dimensions up to a sensible limit.
 -   Allow users to change the time between ticks up to a sensible limit.
 -   Allow users to change cell size up to a sensible limit.
 -   Dynamically set up the initial board dimensions (column and row size) based on window height and width to avoid overflow.
--   Set up the entire board using a single array, identifying neighbours through column size instead.
 
 ## Create React App
 

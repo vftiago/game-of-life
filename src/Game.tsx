@@ -17,9 +17,13 @@ const Game = () => {
         columnCount,
         rowCount,
         cellType,
+        isAlertVisible,
+        showLogs,
         setColumnCount,
         setRowCount,
         setCellType,
+        setIsAlertVisible,
+        setShowLogs,
     } = useUserSettings();
 
     const [isGameSettingsOpen, setIsGameSettingsOpen] = useState(false);
@@ -79,6 +83,17 @@ const Game = () => {
         setIsGameSettingsOpen(false);
     }, []);
 
+    const handleDismissAlert = useCallback(() => {
+        setIsAlertVisible(false);
+    }, [setIsAlertVisible]);
+
+    const handleClickShowLogs = useCallback(
+        (checked: boolean) => {
+            setShowLogs(checked);
+        },
+        [setShowLogs],
+    );
+
     return (
         <Stack direction="column" alignItems="center">
             <MemoizedGameSettings
@@ -87,18 +102,24 @@ const Game = () => {
                 columnCount={columnCount}
                 rowCount={rowCount}
                 cellType={cellType}
+                isAlertVisible={isAlertVisible}
+                showLogs={showLogs}
                 onClose={handleCloseSettingsMenu}
                 onSelectColumnCount={handleSelectColumnCount}
                 onSelectRowCount={handleSelectRowCount}
                 onSelectCellType={handleSelectCellType}
+                onDismissAlert={handleDismissAlert}
+                onClickShowLogs={handleClickShowLogs}
             />
             <MemoizedGameHeader
                 buttonRef={buttonRef}
+                showLogs={showLogs}
                 onOpenSettingsMenu={handleOpenSettingsMenu}
             />
             <Divider />
             <MemoizedGameControls
                 isRunning={isRunning}
+                showLogs={showLogs}
                 onClickPlayPause={handleClickPlayPause}
                 onClickNext={handleClickNext}
                 onClickReset={handleClickReset}
@@ -109,6 +130,7 @@ const Game = () => {
                 stepNumber={stepNumber}
                 cellType={cellType}
                 grid={grid}
+                showLogs={showLogs}
                 onClickCell={handleClickCell}
             />
         </Stack>

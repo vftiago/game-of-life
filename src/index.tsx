@@ -9,7 +9,9 @@ import {
 import chakraTheme from "@chakra-ui/theme";
 
 const {
+    Alert,
     Button: BaseButton,
+    Checkbox,
     Container,
     Divider,
     Drawer,
@@ -22,6 +24,7 @@ const {
 
 const theme = extendBaseTheme({
     components: {
+        Alert,
         Button: {
             ...BaseButton,
             baseStyle: {
@@ -33,6 +36,7 @@ const theme = extendBaseTheme({
                 colorScheme: "teal",
             },
         },
+        Checkbox,
         Container,
         Divider,
         Drawer,

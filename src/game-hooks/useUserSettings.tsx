@@ -13,16 +13,22 @@ const useUserSettings = () => {
     const [rowCount, setRowCount] = useState<number>(DEFAULT_ROW_COUNT);
     const [interval, setInterval] = useState<number>(DEFAULT_INTERVAL);
     const [cellType, setCellType] = useState<CellType>(DEFAULT_CELL_TYPE);
+    const [isAlertVisible, setIsAlertVisible] = useState<boolean>(true);
+    const [showLogs, setShowLogs] = useState<boolean>(false);
 
     return {
         columnCount,
         rowCount,
         interval,
         cellType,
+        isAlertVisible,
+        showLogs,
         setColumnCount,
         setRowCount,
         setInterval,
         setCellType,
+        setIsAlertVisible,
+        setShowLogs,
     };
 };
 

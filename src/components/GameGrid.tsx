@@ -16,6 +16,7 @@ type GameGridProps = {
     stepNumber: number;
     cellType: "dot" | "square";
     grid: GameGrid;
+    showLogs: boolean;
     onClickCell: (columnCount: number, rowIndex: number, cell: boolean) => void;
 };
 
@@ -24,8 +25,13 @@ const GameGridC = ({
     grid,
     stepNumber,
     cellType,
+    showLogs,
     onClickCell,
 }: GameGridProps) => {
+    if (showLogs) {
+        console.info("GameGridC rendered");
+    }
+
     const { colorMode } = useColorMode();
 
     const getBackgroundColor = (alive: boolean) => {

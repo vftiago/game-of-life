@@ -1,5 +1,9 @@
 import { InfoIcon } from "@chakra-ui/icons";
 import {
+    Alert,
+    AlertIcon,
+    Button,
+    Checkbox,
     Drawer,
     DrawerBody,
     DrawerCloseButton,
@@ -13,7 +17,7 @@ import {
     Stack,
     Tooltip,
 } from "@chakra-ui/react";
-import { memo, RefObject, SyntheticEvent } from "react";
+import { ChangeEvent, memo, RefObject, SyntheticEvent } from "react";
 import { CellType, GRID_SIZE_OPTIONS } from "../game-utils/constants";
 
 type GameSettingsProps = {
@@ -22,10 +26,14 @@ type GameSettingsProps = {
     columnCount: number;
     rowCount: number;
     cellType: CellType;
+    isAlertVisible: boolean;
+    showLogs: boolean;
     onClose: () => void;
     onSelectColumnCount: (selection: number) => void;
     onSelectRowCount: (selection: number) => void;
     onSelectCellType: (selection: CellType) => void;
+    onDismissAlert: () => void;
+    onClickShowLogs: (checked: boolean) => void;
 };
 
 const GameSettings = ({
@@ -34,11 +42,19 @@ const GameSettings = ({
     columnCount,
     rowCount,
     cellType,
+    isAlertVisible,
+    showLogs,
     onClose,
     onSelectColumnCount,
     onSelectRowCount,
     onSelectCellType,
+    onDismissAlert,
+    onClickShowLogs,
 }: GameSettingsProps) => {
+    if (showLogs) {
+        console.info("GameSettings rendered");
+    }
+
     return (
         <Drawer
             isOpen={isOpen}
@@ -53,7 +69,28 @@ const GameSettings = ({
                 <DrawerHeader>Game settings</DrawerHeader>
                 <DrawerBody>
                     <Stack gap="2rem">
-                        <p>Opening the settings menu will pause the game.</p>
+                        {isAlertVisible && (
+                            <Alert
+                                status="info"
+                                variant="left-accent"
+                                flexDirection="column"
+                            >
+                                <Flex alignSelf="flex-start">
+                                    <AlertIcon />
+                                    Opening the settings menu will pause the
+                                    game. You will have to unpause it yourself.
+                                </Flex>
+                                <Button
+                                    colorScheme="gray"
+                                    size="sm"
+                                    alignSelf="flex-end"
+                                    onClick={onDismissAlert}
+                                >
+                                    Ok
+                                </Button>
+                            </Alert>
+                        )}
+
                         <Stack>
                             <Flex align="center" justifyContent="space-between">
                                 <p>Columns:</p>
@@ -127,6 +164,18 @@ const GameSettings = ({
                                     </Radio>
                                 </Stack>
                             </RadioGroup>
+                        </Stack>
+                        <Stack>
+                            <Checkbox
+                                isChecked={showLogs}
+                                onChange={(
+                                    e: ChangeEvent<HTMLInputElement>,
+                                ) => {
+                                    onClickShowLogs(e.target.checked);
+                                }}
+                            >
+                                Show logs
+                            </Checkbox>
                         </Stack>
                     </Stack>
                 </DrawerBody>

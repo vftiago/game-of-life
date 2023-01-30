@@ -6,10 +6,19 @@ import SettingsDrawerSwitcher from "./SettingsDrawerSwitcher";
 
 type GameHeaderProps = {
     buttonRef: RefObject<HTMLButtonElement>;
+    showLogs: boolean;
     onOpenSettingsMenu: () => void;
 };
 
-const GameHeader = ({ buttonRef, onOpenSettingsMenu }: GameHeaderProps) => {
+const GameHeader = ({
+    buttonRef,
+    showLogs,
+    onOpenSettingsMenu,
+}: GameHeaderProps) => {
+    if (showLogs) {
+        console.info("GameHeader rendered");
+    }
+
     return (
         <Flex
             width="100%"

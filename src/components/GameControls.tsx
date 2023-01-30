@@ -3,6 +3,7 @@ import { memo } from "react";
 
 type GameControlsProps = {
     isRunning: boolean;
+    showLogs: boolean;
     onClickPlayPause: () => void;
     onClickNext: () => void;
     onClickReset: () => void;
@@ -10,10 +11,15 @@ type GameControlsProps = {
 
 const GameControls = ({
     isRunning,
+    showLogs,
     onClickPlayPause,
     onClickNext,
     onClickReset,
 }: GameControlsProps) => {
+    if (showLogs) {
+        console.info("GameControls rendered");
+    }
+
     return (
         <Flex alignItems="center" gap="1rem" padding="1rem">
             <Button onClick={onClickReset}>Reset</Button>

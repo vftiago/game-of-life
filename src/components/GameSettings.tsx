@@ -79,6 +79,8 @@ const GameSettings = ({
                                     <AlertIcon />
                                     Opening the settings menu will pause the
                                     game. You will have to unpause it yourself.
+                                    Updating either the column count or the row
+                                    count will reset the game.
                                 </Flex>
                                 <Button
                                     colorScheme="gray"

@@ -1,30 +1,42 @@
 import { Divider, Stack } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
-
+import { useCallback, useReducer, useRef, useState } from "react";
 import MemoizedGameControls from "./components/GameControls";
 import MemoizedGameSettings from "./components/GameSettings";
 import useGame from "./game-hooks/useGame";
-import useUserSettings from "./game-hooks/useUserSettings";
 import MemoizedGameHeader from "./components/GameHeader";
-import { CellType } from "./game-utils/constants";
+import { DEFAULT_USER_SETTINGS, UserSettings } from "./game-utils/constants";
 import MemoizedGameGrid from "./components/GameGrid";
+import invariant from "tiny-invariant";
+
+export type NewSettings = Partial<UserSettings> & {
+    type?: "updateColumnCount" | "updateRowCount";
+};
 
 const Game = () => {
     const { grid, stepNumber, isRunning, setGrid, setIsRunning, next, reset } =
         useGame();
 
-    const {
-        columnCount,
-        rowCount,
-        cellType,
-        isAlertVisible,
-        showLogs,
-        setColumnCount,
-        setRowCount,
-        setCellType,
-        setIsAlertVisible,
-        setShowLogs,
-    } = useUserSettings();
+    // this looks slightly prettier than a bunch of handler callbacks but it doesn't help with the unnecessary renders problem...
+    const [userSettings, updateUserSettings] = useReducer(
+        (settings: UserSettings, newSettings: NewSettings) => {
+            switch (newSettings.type) {
+                case "updateColumnCount":
+                    invariant(newSettings.columnCount);
+                    reset(newSettings.columnCount, settings.rowCount);
+                    return { ...settings, ...newSettings };
+                case "updateRowCount":
+                    invariant(newSettings.rowCount);
+                    reset(settings.columnCount, newSettings.rowCount);
+                    return { ...settings, ...newSettings };
+                default:
+                    return { ...settings, ...newSettings };
+            }
+        },
+        DEFAULT_USER_SETTINGS,
+    );
+
+    // ...because with this approach the entire userSettings object will always be new with every update
+    const { columnCount, rowCount, cellType, showLogs } = userSettings;
 
     const [isGameSettingsOpen, setIsGameSettingsOpen] = useState(false);
 
@@ -51,29 +63,6 @@ const Game = () => {
         [grid, setGrid],
     );
 
-    const handleSelectColumnCount = useCallback(
-        (selection: number) => {
-            setColumnCount(selection);
-            reset(selection, rowCount);
-        },
-        [rowCount, setColumnCount, reset],
-    );
-
-    const handleSelectRowCount = useCallback(
-        (selection: number) => {
-            setRowCount(selection);
-            reset(columnCount, selection);
-        },
-        [columnCount, setRowCount, reset],
-    );
-
-    const handleSelectCellType = useCallback(
-        (selection: CellType) => {
-            setCellType(selection);
-        },
-        [setCellType],
-    );
-
     const handleOpenSettingsMenu = useCallback(() => {
         setIsGameSettingsOpen(true);
         setIsRunning(false);
@@ -83,33 +72,21 @@ const Game = () => {
         setIsGameSettingsOpen(false);
     }, []);
 
-    const handleDismissAlert = useCallback(() => {
-        setIsAlertVisible(false);
-    }, [setIsAlertVisible]);
-
-    const handleClickShowLogs = useCallback(
-        (checked: boolean) => {
-            setShowLogs(checked);
-        },
-        [setShowLogs],
-    );
+    const handleUpdateUserSettings = (newSettings: Partial<UserSettings>) => {
+        updateUserSettings({
+            ...userSettings,
+            ...newSettings,
+        });
+    };
 
     return (
         <Stack direction="column" alignItems="center">
             <MemoizedGameSettings
                 buttonRef={buttonRef}
                 isOpen={isGameSettingsOpen}
-                columnCount={columnCount}
-                rowCount={rowCount}
-                cellType={cellType}
-                isAlertVisible={isAlertVisible}
-                showLogs={showLogs}
+                userSettings={userSettings}
                 onClose={handleCloseSettingsMenu}
-                onSelectColumnCount={handleSelectColumnCount}
-                onSelectRowCount={handleSelectRowCount}
-                onSelectCellType={handleSelectCellType}
-                onDismissAlert={handleDismissAlert}
-                onClickShowLogs={handleClickShowLogs}
+                updateUserSettings={handleUpdateUserSettings}
             />
             <MemoizedGameHeader
                 buttonRef={buttonRef}

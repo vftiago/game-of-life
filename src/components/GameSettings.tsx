@@ -18,39 +18,31 @@ import {
     Tooltip,
 } from "@chakra-ui/react";
 import { ChangeEvent, memo, RefObject, SyntheticEvent } from "react";
-import { CellType, GRID_SIZE_OPTIONS } from "../game-utils/constants";
+import { NewSettings } from "../Game";
+import {
+    CellType,
+    GRID_SIZE_OPTIONS,
+    UserSettings,
+} from "../game-utils/constants";
 
 type GameSettingsProps = {
     isOpen: boolean;
     buttonRef: RefObject<HTMLButtonElement>;
-    columnCount: number;
-    rowCount: number;
-    cellType: CellType;
-    isAlertVisible: boolean;
-    showLogs: boolean;
+    userSettings: UserSettings;
     onClose: () => void;
-    onSelectColumnCount: (selection: number) => void;
-    onSelectRowCount: (selection: number) => void;
-    onSelectCellType: (selection: CellType) => void;
-    onDismissAlert: () => void;
-    onClickShowLogs: (checked: boolean) => void;
+    updateUserSettings: (newSettings: NewSettings) => void;
 };
 
 const GameSettings = ({
     isOpen,
     buttonRef,
-    columnCount,
-    rowCount,
-    cellType,
-    isAlertVisible,
-    showLogs,
+    userSettings,
     onClose,
-    onSelectColumnCount,
-    onSelectRowCount,
-    onSelectCellType,
-    onDismissAlert,
-    onClickShowLogs,
+    updateUserSettings,
 }: GameSettingsProps) => {
+    const { columnCount, rowCount, cellType, isAlertVisible, showLogs } =
+        userSettings;
+
     if (showLogs) {
         console.info("GameSettings rendered");
     }
@@ -84,7 +76,11 @@ const GameSettings = ({
                                     colorScheme="gray"
                                     size="sm"
                                     alignSelf="flex-end"
-                                    onClick={onDismissAlert}
+                                    onClick={() => {
+                                        updateUserSettings({
+                                            isAlertVisible: false,
+                                        });
+                                    }}
                                 >
                                     Ok
                                 </Button>
@@ -108,9 +104,12 @@ const GameSettings = ({
                                 onChange={(
                                     e: SyntheticEvent<HTMLSelectElement, Event>,
                                 ) => {
-                                    onSelectColumnCount(
-                                        Number(e.currentTarget.value),
-                                    );
+                                    updateUserSettings({
+                                        type: "updateColumnCount",
+                                        columnCount: Number(
+                                            e.currentTarget.value,
+                                        ),
+                                    });
                                 }}
                             >
                                 {GRID_SIZE_OPTIONS.map((option) => (
@@ -137,9 +136,10 @@ const GameSettings = ({
                                 onChange={(
                                     e: SyntheticEvent<HTMLSelectElement, Event>,
                                 ) => {
-                                    onSelectRowCount(
-                                        Number(e.currentTarget.value),
-                                    );
+                                    updateUserSettings({
+                                        type: "updateRowCount",
+                                        rowCount: Number(e.currentTarget.value),
+                                    });
                                 }}
                             >
                                 {GRID_SIZE_OPTIONS.map((option) => (
@@ -153,7 +153,9 @@ const GameSettings = ({
                             <p>Cell type:</p>
                             <RadioGroup
                                 onChange={(value: CellType) => {
-                                    onSelectCellType(value);
+                                    updateUserSettings({
+                                        cellType: value,
+                                    });
                                 }}
                                 value={cellType}
                             >
@@ -171,7 +173,9 @@ const GameSettings = ({
                                 onChange={(
                                     e: ChangeEvent<HTMLInputElement>,
                                 ) => {
-                                    onClickShowLogs(e.target.checked);
+                                    updateUserSettings({
+                                        showLogs: e.target.checked,
+                                    });
                                 }}
                             >
                                 Show logs

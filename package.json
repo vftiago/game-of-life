@@ -11,17 +11,10 @@
         "@emotion/css": "^11.10.5",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/user-event": "^13.5.0",
-        "@types/jest": "^27.5.2",
-        "@types/node": "^16.18.3",
-        "@types/react": "^18.0.25",
-        "@types/react-dom": "^18.0.9",
         "framer-motion": "^8.4.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-fps": "^1.0.6",
-        "react-scripts": "5.0.1",
         "typescript": "^4.9.3",
         "use-interval": "^1.4.0",
         "web-vitals": "^2.1.4"
@@ -49,11 +42,23 @@
         ]
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/jest": "^27.5.2",
+        "@types/node": "^16.18.3",
+        "@types/react": "^18.0.25",
+        "@types/react-dom": "^18.0.9",
         "eslint": "^8.28.0",
         "husky": "^8.0.2",
         "lint-staged": "^13.0.4",
-        "prettier": "^2.8.0"
+        "prettier": "^2.8.0",
+        "react-scripts": "5.0.1"
+    },
+    "overrides": {
+      "react-scripts": {
+        "@svgr/webpack": "^6.2.1"
+      }
     },
     "lint-staged": {
         "**/*.{ts,tsx}": [

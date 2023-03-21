@@ -1,11 +1,11 @@
 {
-    "extends": ["react-app", "react-app/jest"],
-    "overrides": [
-        {
-            "files": ["**/*.tsx"],
-            "rules": {
-                "react/react-in-jsx-scope": "off"
-            }
-        }
-    ]
+    "env": {
+        "node": true
+    },
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "latest"
+    }
 }

@@ -4,6 +4,7 @@ import {
     DEFAULT_COLUMN_COUNT,
     DEFAULT_ROW_COUNT,
 } from "./game-utils/constants";
+import "@testing-library/jest-dom/extend-expect";
 
 describe("<Game />", () => {
     render(<Game />);

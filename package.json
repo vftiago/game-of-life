@@ -26,7 +26,7 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "jest",
-    "test:staged": "jest --findRelatedTests --bail"
+    "test:staged": "jest --findRelatedTests --passWithNoTests --bail"
   },
   "browserslist": {
     "production": [

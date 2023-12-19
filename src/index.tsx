@@ -6,7 +6,7 @@ import {
   ColorModeScript,
   extendBaseTheme,
 } from "@chakra-ui/react";
-import chakraTheme from "@chakra-ui/theme";
+import { components } from "@chakra-ui/theme/components";
 
 const {
   Alert,
@@ -20,7 +20,7 @@ const {
   Select,
   Stat,
   Tooltip,
-} = chakraTheme.components;
+} = components;
 
 const theme = extendBaseTheme({
   components: {

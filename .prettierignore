@@ -2,6 +2,4 @@
 /dist
 package.json
 package-lock.json
-*.frag
-*.vert
 LICENSE

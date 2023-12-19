@@ -21,8 +21,8 @@ To run the project, clone it, run `npm i`, and then run `npm start`. You should 
 
 The following features could potentially increase the app's usability at little development cost (quick wins), in no particular order:
 
--   [x] Allow users to set up an initial board state by clicking each individual `Cell` to change its state to `dead` or `alive`.
-    -   [ ] As a follow-up, allow users to clear the board as well (set all cells to `dead`).
--   [ ] Allow users to change the time between ticks up to a sensible limit.
--   [ ] Allow users to change cell size up to a sensible limit.
--   [ ] Dynamically set up the initial board dimensions (column and row size) based on window height and width to avoid overflow.
+- [x] Allow users to set up an initial board state by clicking each individual `Cell` to change its state to `dead` or `alive`.
+  - [ ] As a follow-up, allow users to clear the board as well (set all cells to `dead`).
+- [ ] Allow users to change the time between ticks up to a sensible limit.
+- [ ] Allow users to change cell size up to a sensible limit.
+- [ ] Dynamically set up the initial board dimensions (column and row size) based on window height and width to avoid overflow.

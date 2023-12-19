@@ -1,8 +1,8 @@
 {
-    "arrowParens": "always",
-    "quoteProps": "consistent",
-    "semi": true,
-    "singleQuote": false,
-    "tabWidth": 4,
-    "trailingComma": "all"
+  "arrowParens": "always",
+  "quoteProps": "consistent",
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "all"
 }

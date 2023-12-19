@@ -1,6 +1,6 @@
 export enum CellType {
-    Square = "square",
-    Dot = "dot",
+  Square = "square",
+  Dot = "dot",
 }
 
 export const DEFAULT_COLUMN_COUNT = 60;

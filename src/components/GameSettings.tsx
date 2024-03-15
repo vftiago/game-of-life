@@ -59,7 +59,6 @@ const GameSettings = ({
     <Drawer
       isOpen={isOpen}
       placement="left"
-      size="md"
       onClose={onClose}
       finalFocusRef={buttonRef}
     >

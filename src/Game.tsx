@@ -3,10 +3,10 @@ import { useCallback, useRef, useState } from "react";
 
 import MemoizedGameControls from "./components/GameControls";
 import MemoizedGameSettings from "./components/GameSettings";
-import useGame from "./game-hooks/useGame";
-import useUserSettings from "./game-hooks/useUserSettings";
+import useGame from "./hooks/useGame";
+import useUserSettings from "./hooks/useUserSettings";
 import MemoizedGameHeader from "./components/GameHeader";
-import { CellType } from "./game-utils/constants";
+import { CellType } from "./utils/constants";
 import MemoizedGameGrid from "./components/GameGrid";
 
 const Game = () => {

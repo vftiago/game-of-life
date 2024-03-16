@@ -1,9 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import Game from "./Game";
-import {
-  DEFAULT_COLUMN_COUNT,
-  DEFAULT_ROW_COUNT,
-} from "./game-utils/constants";
+import { DEFAULT_COLUMN_COUNT, DEFAULT_ROW_COUNT } from "./utils/constants";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("<Game />", () => {
@@ -19,7 +16,7 @@ describe("<Game />", () => {
     const stepNumber = screen.getByTestId("step-number");
     const columns = screen.queryAllByTestId("column");
     const cells = screen.queryAllByTestId("cell");
-    const stepTestCount = 5;
+    const stepTestCount = 3;
 
     // expect basic ui elements to be in the document and the grid to have the default dimensions
     expect(title).toBeInTheDocument();

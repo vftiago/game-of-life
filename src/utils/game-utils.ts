@@ -1,7 +1,7 @@
 import {
-  DEFAULT_COLUMN_COUNT,
   DEFAULT_DENSITY,
   DEFAULT_ROW_COUNT,
+  DEFAULT_COLUMN_COUNT,
 } from "./constants";
 
 export type GameGrid = boolean[][];

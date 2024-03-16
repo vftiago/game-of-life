@@ -18,7 +18,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { ChangeEvent, memo, RefObject, SyntheticEvent } from "react";
-import { CellType, GRID_SIZE_OPTIONS } from "../game-utils/constants";
+import { CellType, GRID_SIZE_OPTIONS } from "../utils/constants";
 
 type GameSettingsProps = {
   isOpen: boolean;

@@ -8,8 +8,8 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { memo } from "react";
-import { DEFAULT_CELL_SIZE } from "../game-utils/constants";
-import { GameGrid } from "../game-utils/game-utils";
+import { DEFAULT_CELL_SIZE } from "../utils/constants";
+import { GameGrid } from "../utils/game-utils";
 
 type GameGridProps = {
   columnCount: number;

@@ -2,13 +2,17 @@ import { useState } from "react";
 import {
   CellType,
   DEFAULT_CELL_TYPE,
-  DEFAULT_COLUMN_COUNT,
+  INITIAL_COLUMN_COUNT,
   DEFAULT_INTERVAL,
   DEFAULT_ROW_COUNT,
-} from "../game-utils/constants";
+} from "../utils/constants";
+import { useBreakpoints } from "./useBreakpoints";
 
 const useUserSettings = () => {
-  const [columnCount, setColumnCount] = useState<number>(DEFAULT_COLUMN_COUNT);
+  const screenSize = useBreakpoints();
+  const [columnCount, setColumnCount] = useState<number>(
+    INITIAL_COLUMN_COUNT[screenSize],
+  );
   const [rowCount, setRowCount] = useState<number>(DEFAULT_ROW_COUNT);
   const [interval, setInterval] = useState<number>(DEFAULT_INTERVAL);
   const [cellType, setCellType] = useState<CellType>(DEFAULT_CELL_TYPE);

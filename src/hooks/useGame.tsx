@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 import useInterval from "use-interval";
 import {
-  INITIAL_COLUMN_COUNT,
   DEFAULT_INTERVAL,
-  DEFAULT_ROW_COUNT,
+  INITIAL_COLUMN_COUNT,
+  INITIAL_ROW_COUNT,
 } from "../utils/constants";
 import { getNextGrid, getRandomizedGrid, GameGrid } from "../utils/game-utils";
 import { useBreakpoints } from "./useBreakpoints";
@@ -11,9 +11,9 @@ import { useBreakpoints } from "./useBreakpoints";
 const useGame = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [stepNumber, setStepNumber] = useState<number>(0);
-  const screenSize = useBreakpoints();
+  const { height, width } = useBreakpoints();
   const [grid, setGrid] = useState<GameGrid>(
-    getRandomizedGrid(INITIAL_COLUMN_COUNT[screenSize], DEFAULT_ROW_COUNT),
+    getRandomizedGrid(INITIAL_COLUMN_COUNT[width], INITIAL_ROW_COUNT[height]),
   );
 
   useInterval(

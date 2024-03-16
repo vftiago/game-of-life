@@ -9,9 +9,9 @@ import {
 import { useBreakpoints } from "./useBreakpoints";
 
 const useUserSettings = () => {
-  const screenSize = useBreakpoints();
+  const { width } = useBreakpoints();
   const [columnCount, setColumnCount] = useState<number>(
-    INITIAL_COLUMN_COUNT[screenSize],
+    INITIAL_COLUMN_COUNT[width],
   );
   const [rowCount, setRowCount] = useState<number>(DEFAULT_ROW_COUNT);
   const [interval, setInterval] = useState<number>(DEFAULT_INTERVAL);

@@ -13,8 +13,18 @@ export const INITIAL_COLUMN_COUNT = {
   xxl: 100,
 };
 
+export const INITIAL_ROW_COUNT = {
+  xxs: 15,
+  xs: 20,
+  sm: 30,
+  md: 40,
+  lg: 60,
+  xl: 80,
+  xxl: 100,
+};
+
 export const DEFAULT_COLUMN_COUNT = INITIAL_COLUMN_COUNT.lg;
-export const DEFAULT_ROW_COUNT = INITIAL_COLUMN_COUNT.lg;
+export const DEFAULT_ROW_COUNT = INITIAL_ROW_COUNT.md;
 export const DEFAULT_INTERVAL = 88;
 export const DEFAULT_DENSITY = 0.15;
 export const DEFAULT_CELL_SIZE = 10;

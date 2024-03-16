@@ -21,23 +21,31 @@ const breakpoints = {
 };
 
 const getScreenSize = () => {
+  const height = window.innerHeight;
   const width = window.innerWidth;
 
-  let screenSize = ScreenSize.XxS;
+  const screenSize = {
+    height: ScreenSize.XxS,
+    width: ScreenSize.XxS,
+  };
 
   for (const size of Object.values(ScreenSize)) {
-    if (width < breakpoints[size]) {
-      break;
+    if (height >= breakpoints[size]) {
+      screenSize.height = size;
     }
-
-    screenSize = size;
+    if (width >= breakpoints[size]) {
+      screenSize.width = size;
+    }
   }
 
   return screenSize;
 };
 
 export const useBreakpoints = () => {
-  const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize);
+  const [screenSize, setScreenSize] = useState<{
+    height: ScreenSize;
+    width: ScreenSize;
+  }>(getScreenSize);
 
   const handleResize = () => {
     setScreenSize(getScreenSize);

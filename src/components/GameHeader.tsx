@@ -1,50 +1,42 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
-import { memo, RefObject } from "react";
-import ColorModeSwitcher from "./ColorModeSwitcher";
-import SettingsDrawerSwitcher from "./SettingsDrawerSwitcher";
+import { IconExternalLink } from "@tabler/icons-react";
+import { Button, Flex, Title } from "@mantine/core";
+import { memo } from "react";
+import { ColorSchemeSwitcher } from "./ColorSchemeSwitcher";
+import { SettingsDrawerSwitcher } from "./SettingsDrawerSwitcher";
+import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
 
 type GameHeaderProps = {
-  buttonRef: RefObject<HTMLButtonElement>;
   showLogs: boolean;
   onOpenSettingsMenu: () => void;
 };
 
-const GameHeader = ({
-  buttonRef,
-  showLogs,
-  onOpenSettingsMenu,
-}: GameHeaderProps) => {
+const GameHeader = ({ showLogs, onOpenSettingsMenu }: GameHeaderProps) => {
   if (showLogs) {
     console.info("GameHeader rendered");
   }
 
+  const { width } = useBreakpoints();
+
   return (
-    <Flex
-      width="100%"
-      alignItems="center"
-      justifyContent="space-between"
-      padding="1rem"
-    >
-      <SettingsDrawerSwitcher
-        buttonRef={buttonRef}
-        onClick={onOpenSettingsMenu}
-      />
-      <Stack direction="column" alignItems="center">
-        <Heading as="h1">Game of Life</Heading>
-        <a href="https://github.com/vftiago/game-of-life">
-          <Button leftIcon={<StarIcon />} colorScheme="gray" size="sm">
-            Github
-          </Button>
-        </a>
-      </Stack>
-      <ColorModeSwitcher />
+    <Flex direction="column" align="center" p="1rem" gap="1rem">
+      <Flex justify="space-between" w="100%" align="center">
+        <SettingsDrawerSwitcher onClick={onOpenSettingsMenu} />
+        <Title fz={width === ScreenSize.XxS ? 20 : undefined}>
+          Game of Life
+        </Title>
+        <ColorSchemeSwitcher />
+      </Flex>
+      <a href="https://github.com/vftiago/game-of-life" target="_blank">
+        <Button
+          variant="default"
+          rightSection={<IconExternalLink size={16} />}
+          size={width === ScreenSize.XxS ? "xs" : "sm"}
+        >
+          GitHub
+        </Button>
+      </a>
     </Flex>
   );
 };
 
-const MemoizedGameHeader = memo((props: GameHeaderProps) => (
-  <GameHeader {...props} />
-));
-
-export default MemoizedGameHeader;
+export default memo(GameHeader);

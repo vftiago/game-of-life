@@ -1,86 +1,77 @@
-import {
-  Flex,
-  Grid,
-  Stack,
-  Stat,
-  StatLabel,
-  StatNumber,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Flex, Grid, Stack } from "@mantine/core";
 import { memo } from "react";
-import { DEFAULT_CELL_SIZE } from "../utils/constants";
-import { GameGrid } from "../utils/game-utils";
+import { DEFAULT_CELL_SIZE } from "../constants";
+import { GameGridType } from "../game-utils/grid";
+import { useMantineColorScheme } from "@mantine/core";
+import "./GameGrid.css";
 
 type GameGridProps = {
+  isRunning: boolean;
   columnCount: number;
   stepNumber: number;
   cellType: "dot" | "square";
-  grid: GameGrid;
+  grid: GameGridType;
   showLogs: boolean;
   onClickCell: (columnCount: number, rowIndex: number, cell: boolean) => void;
 };
 
-const GameGridC = ({
-  columnCount,
+const GameGrid = ({
+  isRunning,
   grid,
   stepNumber,
   cellType,
   showLogs,
   onClickCell,
+  columnCount,
 }: GameGridProps) => {
   if (showLogs) {
-    console.info("GameGridC rendered");
+    console.info("GameGrid rendered");
   }
 
-  const { colorMode } = useColorMode();
+  const { colorScheme } = useMantineColorScheme();
 
   const getBackgroundColor = (alive: boolean) => {
-    if (colorMode === "light") return alive ? "#1A202C" : "white";
-    return alive ? "white" : "#1A202C";
+    if (colorScheme === "light") return alive ? "#242424" : "white";
+    return alive ? "white" : "#242424";
   };
 
   return (
     <Stack>
-      <Flex>
-        <Stat>
-          <StatLabel>Step</StatLabel>
-          <StatNumber data-testid="step-number">{stepNumber}</StatNumber>
-        </Stat>
-      </Flex>
-      <Grid gridTemplateColumns={`repeat(${columnCount}, 1fr)`} gap="1px">
+      <div>
+        Step: <span data-testid="step-number">{stepNumber}</span>
+      </div>
+      <Grid
+        columns={columnCount}
+        gutter="1px"
+        justify="center"
+        overflow="hidden"
+      >
         {grid.map((column: boolean[], columnIndex: number) => (
-          <Flex
-            direction="column"
-            gap="1px"
-            key={columnIndex}
-            data-testid="column"
-          >
-            {column.map((cell: boolean, rowIndex: number) => (
-              <div
-                // we're styling cells inline performance reasons:
-                // https://emotion.sh/docs/performance
-                onClick={() => {
-                  onClickCell(columnIndex, rowIndex, cell);
-                }}
-                style={{
-                  backgroundColor: getBackgroundColor(cell),
-                  borderRadius: cellType === "dot" ? "50%" : "15%",
-                  height: `${DEFAULT_CELL_SIZE}px`,
-                  width: `${DEFAULT_CELL_SIZE}px`,
-                }}
-                data-testid="cell"
-                key={columnIndex.toString() + rowIndex.toString()}
-              />
-            ))}
-          </Flex>
+          <Grid.Col key={columnIndex} data-testid="column" span="content">
+            <Flex direction="column" gap="1px">
+              {column.map((cell: boolean, rowIndex: number) => (
+                <div
+                  className={isRunning ? "" : "cell"}
+                  onClick={() => {
+                    if (isRunning) return;
+                    onClickCell(columnIndex, rowIndex, cell);
+                  }}
+                  style={{
+                    backgroundColor: getBackgroundColor(cell),
+                    borderRadius: cellType === "dot" ? "50%" : "15%",
+                    height: `${DEFAULT_CELL_SIZE}px`,
+                    width: `${DEFAULT_CELL_SIZE}px`,
+                  }}
+                  data-testid="cell"
+                  key={columnIndex.toString() + rowIndex.toString()}
+                />
+              ))}
+            </Flex>
+          </Grid.Col>
         ))}
       </Grid>
     </Stack>
   );
 };
 
-const MemoizedGameGrid = memo((props: GameGridProps) => (
-  <GameGridC {...props} />
-));
-
-export default MemoizedGameGrid;
+export default memo(GameGrid);

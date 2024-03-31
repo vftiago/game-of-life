@@ -1,6 +1,6 @@
 {
-  "short_name": "Game of Life",
-  "name": "Game of Life App created using create-react-app",
+  "short_name": "React Game of Life",
+  "name": "React Game of Life",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": "https://game-of-life.vftiago.com",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ffffff",
+  "background_color": "#000000"
 }

@@ -1,26 +1,24 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { IconButton } from "@chakra-ui/react";
-import { RefObject } from "react";
+import { IconMenu2 } from "@tabler/icons-react";
+import { ActionIcon } from "@mantine/core";
+import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
 
 type SettingsMenuSwitcherProps = {
-  buttonRef: RefObject<HTMLButtonElement>;
   onClick: () => void;
 };
 
 export const SettingsDrawerSwitcher = ({
-  buttonRef,
   onClick,
 }: SettingsMenuSwitcherProps) => {
+  const { width } = useBreakpoints();
+
   return (
-    <IconButton
-      ref={buttonRef}
-      colorScheme={"gray"}
+    <ActionIcon
+      size={width === ScreenSize.XxS ? "md" : "lg"}
+      variant="default"
       onClick={onClick}
-      icon={<HamburgerIcon />}
-      aria-label={`Open settings menu`}
-      width="2rem"
-    />
+      aria-label="Open settings menu"
+    >
+      <IconMenu2 size={20} />
+    </ActionIcon>
   );
 };
-
-export default SettingsDrawerSwitcher;

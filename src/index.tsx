@@ -1,52 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 import Game from "./Game";
-import {
-  ChakraBaseProvider,
-  ColorModeScript,
-  extendBaseTheme,
-} from "@chakra-ui/react";
-import { components } from "@chakra-ui/theme/components";
-
-const {
-  Alert,
-  Button: BaseButton,
-  Checkbox,
-  Container,
-  Divider,
-  Drawer,
-  Heading,
-  Radio,
-  Select,
-  Stat,
-  Tooltip,
-} = components;
-
-const theme = extendBaseTheme({
-  components: {
-    Alert,
-    Button: {
-      ...BaseButton,
-      baseStyle: {
-        ...BaseButton.baseStyle,
-        lineHeight: 0,
-      },
-      defaultProps: {
-        ...BaseButton.defaultProps,
-        colorScheme: "teal",
-      },
-    },
-    Checkbox,
-    Container,
-    Divider,
-    Drawer,
-    Heading,
-    Radio,
-    Select,
-    Stat,
-    Tooltip,
-  },
-});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -54,9 +10,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ColorModeScript />
-    <ChakraBaseProvider theme={theme}>
+    <MantineProvider>
       <Game />
-    </ChakraBaseProvider>
+    </MantineProvider>
   </React.StrictMode>,
 );

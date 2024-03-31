@@ -1,55 +1,39 @@
-import { InfoIcon } from "@chakra-ui/icons";
 import {
   Alert,
-  AlertIcon,
   Button,
   Checkbox,
   Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
   Flex,
+  Group,
   Radio,
-  RadioGroup,
-  Select,
   Stack,
-  Tooltip,
-} from "@chakra-ui/react";
-import { ChangeEvent, memo, RefObject, SyntheticEvent } from "react";
-import { CellType, GRID_SIZE_OPTIONS } from "../utils/constants";
+  Text,
+} from "@mantine/core";
+
+import { ChangeEvent, memo } from "react";
+import { CellType } from "../constants";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 type GameSettingsProps = {
   isOpen: boolean;
-  buttonRef: RefObject<HTMLButtonElement>;
-  columnCount: number;
-  rowCount: number;
   cellType: CellType;
-  isAlertVisible: boolean;
   showLogs: boolean;
+  isAlertVisible: boolean;
   onClose: () => void;
-  onSelectColumnCount: (selection: number) => void;
-  onSelectRowCount: (selection: number) => void;
   onSelectCellType: (selection: CellType) => void;
-  onDismissAlert: () => void;
   onClickShowLogs: (checked: boolean) => void;
+  onDismissAlert: () => void;
 };
 
 const GameSettings = ({
   isOpen,
-  buttonRef,
-  columnCount,
-  rowCount,
   cellType,
-  isAlertVisible,
   showLogs,
+  isAlertVisible,
   onClose,
-  onSelectColumnCount,
-  onSelectRowCount,
   onSelectCellType,
-  onDismissAlert,
   onClickShowLogs,
+  onDismissAlert,
 }: GameSettingsProps) => {
   if (showLogs) {
     console.info("GameSettings rendered");
@@ -57,119 +41,48 @@ const GameSettings = ({
 
   return (
     <Drawer
-      isOpen={isOpen}
-      placement="left"
+      opened={isOpen}
       onClose={onClose}
-      finalFocusRef={buttonRef}
+      title="Game settings"
+      overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
     >
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerCloseButton />
-        <DrawerHeader>Game settings</DrawerHeader>
-        <DrawerBody>
-          <Stack gap="2rem">
-            {isAlertVisible && (
-              <Alert status="info" variant="left-accent" flexDirection="column">
-                <Flex alignSelf="flex-start">
-                  <AlertIcon />
-                  Opening the settings menu will pause the game. You will have
-                  to unpause it yourself. Updating either the column count or
-                  the row count will reset the game.
-                </Flex>
-                <Button
-                  colorScheme="gray"
-                  size="sm"
-                  alignSelf="flex-end"
-                  onClick={onDismissAlert}
-                >
-                  Ok
-                </Button>
-              </Alert>
-            )}
+      <Stack>
+        {isAlertVisible && (
+          <Alert color="blue" icon={<IconInfoCircle />}>
+            <Flex direction="column" gap="1rem" align="flex-start">
+              <Text size="sm">
+                Opening the settings menu will pause the game
+              </Text>
+              <Button size="xs" onClick={onDismissAlert}>
+                Ok
+              </Button>
+            </Flex>
+          </Alert>
+        )}
+        <Checkbox
+          label="Show logs"
+          checked={showLogs}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            onClickShowLogs(e.target.checked);
+          }}
+        />
 
-            <Stack>
-              <Flex align="center" justifyContent="space-between">
-                <p>Columns:</p>
-                <Tooltip
-                  hasArrow
-                  label="This will affect performance"
-                  fontSize="md"
-                  placement="top"
-                >
-                  <InfoIcon />
-                </Tooltip>
-              </Flex>
-              <Select
-                value={columnCount}
-                onChange={(e: SyntheticEvent<HTMLSelectElement, Event>) => {
-                  onSelectColumnCount(Number(e.currentTarget.value));
-                }}
-              >
-                {GRID_SIZE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            </Stack>
-            <Stack>
-              <Flex align="center" justifyContent="space-between">
-                <p>Rows:</p>
-                <Tooltip
-                  hasArrow
-                  label="This will affect performance"
-                  fontSize="md"
-                  placement="top"
-                >
-                  <InfoIcon />
-                </Tooltip>
-              </Flex>
-              <Select
-                value={rowCount}
-                onChange={(e: SyntheticEvent<HTMLSelectElement, Event>) => {
-                  onSelectRowCount(Number(e.currentTarget.value));
-                }}
-              >
-                {GRID_SIZE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            </Stack>
-            <Stack>
-              <p>Cell type:</p>
-              <RadioGroup
-                onChange={(value: CellType) => {
-                  onSelectCellType(value);
-                }}
-                value={cellType}
-              >
-                <Stack>
-                  <Radio value={CellType.Dot}>Dot</Radio>
-                  <Radio value={CellType.Square}>Square</Radio>
-                </Stack>
-              </RadioGroup>
-            </Stack>
-            <Stack>
-              <Checkbox
-                isChecked={showLogs}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  onClickShowLogs(e.target.checked);
-                }}
-              >
-                Show logs
-              </Checkbox>
-            </Stack>
-          </Stack>
-        </DrawerBody>
-      </DrawerContent>
+        <Radio.Group
+          label="Cell type"
+          description="The difference is purely cosmetic"
+          onChange={(value: string) => {
+            onSelectCellType(value as CellType);
+          }}
+          value={cellType}
+        >
+          <Group mt="xs">
+            <Radio value={CellType.Dot} label="Dot" />
+            <Radio value={CellType.Square} label="Square" />
+          </Group>
+        </Radio.Group>
+      </Stack>
     </Drawer>
   );
 };
 
-const MemoizedGameSettings = memo((props: GameSettingsProps) => (
-  <GameSettings {...props} />
-));
-
-export default MemoizedGameSettings;
+export default memo(GameSettings);

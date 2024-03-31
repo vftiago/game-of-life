@@ -2,9 +2,9 @@ import {
   DEFAULT_DENSITY,
   DEFAULT_ROW_COUNT,
   DEFAULT_COLUMN_COUNT,
-} from "./constants";
+} from "../constants";
 
-export type GameGrid = boolean[][];
+export type GameGridType = boolean[][];
 
 const getFilledArray = (length: number) => {
   return new Array(length).fill(false);
@@ -13,14 +13,14 @@ const getFilledArray = (length: number) => {
 export const getGrid = (
   columnCount: number = DEFAULT_COLUMN_COUNT,
   rowCount: number = DEFAULT_ROW_COUNT,
-): GameGrid => {
+): GameGridType => {
   return getFilledArray(columnCount).map(() => getFilledArray(rowCount));
 };
 
 export const getRandomizedGrid = (
   columnCount: number = DEFAULT_COLUMN_COUNT,
   rowCount: number = DEFAULT_ROW_COUNT,
-): GameGrid => {
+): GameGridType => {
   const grid = getGrid(columnCount, rowCount);
   const randomizedGrid = grid.map((column) =>
     column.map(() => Math.random() < DEFAULT_DENSITY),
@@ -31,7 +31,7 @@ export const getRandomizedGrid = (
 };
 
 export const getLiveNeighbourCount = (
-  grid: GameGrid,
+  grid: GameGridType,
   columnIndex: number,
   rowIndex: number,
 ): number => {
@@ -65,7 +65,7 @@ export const getLiveNeighbourCount = (
   return liveNeighboutCount;
 };
 
-export const getNextGrid = (grid: GameGrid): GameGrid => {
+export const getNextGrid = (grid: GameGridType): GameGridType => {
   const newGrid = getGrid(grid.length, grid[0].length);
 
   grid.forEach((column, columnIndex) => {

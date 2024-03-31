@@ -3,9 +3,9 @@ import {
   getLiveNeighbourCount,
   getNextGrid,
   getRandomizedGrid,
-} from "./game-utils";
+} from "./grid";
 
-import { DEFAULT_COLUMN_COUNT, DEFAULT_ROW_COUNT } from "./constants";
+import { DEFAULT_COLUMN_COUNT, DEFAULT_ROW_COUNT } from "../constants";
 
 describe("getGrid", () => {
   it("should generate a bi-dimensional array with the default dimensions, filled with dead (false) cells", () => {

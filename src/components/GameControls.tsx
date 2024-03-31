@@ -1,5 +1,7 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex } from "@mantine/core";
 import { memo } from "react";
+import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
+import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
 
 type GameControlsProps = {
   isRunning: boolean;
@@ -16,28 +18,41 @@ const GameControls = ({
   onClickNext,
   onClickReset,
 }: GameControlsProps) => {
+  const { width } = useBreakpoints();
+
   if (showLogs) {
     console.info("GameControls rendered");
   }
 
   return (
-    <Flex alignItems="center" gap="1rem" padding="1rem">
-      <Button onClick={onClickReset}>Reset</Button>
+    <Flex align="center" justify="center" gap="1rem" p="1rem" w="100%">
       <Button
-        borderRadius="50%"
-        onClick={onClickPlayPause}
-        height="5rem"
-        width="5rem"
+        size={width === ScreenSize.XxS ? "compact-sm" : "sm"}
+        onClick={onClickReset}
+        variant="gradient"
       >
-        {isRunning ? "Pause" : "Play"}
+        Reset
       </Button>
-      <Button onClick={onClickNext}>Next</Button>
+      <Button
+        aria-label={isRunning ? "Pause" : "Play"}
+        fz={width === ScreenSize.XxS ? 10 : undefined}
+        radius="50%"
+        onClick={onClickPlayPause}
+        h={width === ScreenSize.XxS ? "4rem" : "5rem"}
+        w={width === ScreenSize.XxS ? "4rem" : "5rem"}
+        variant="gradient"
+      >
+        {isRunning ? <IconPlayerPause /> : <IconPlayerPlay />}
+      </Button>
+      <Button
+        size={width === ScreenSize.XxS ? "compact-sm" : "sm"}
+        onClick={onClickNext}
+        variant="gradient"
+      >
+        Next
+      </Button>
     </Flex>
   );
 };
 
-const MemoizedGameControls = memo((props: GameControlsProps) => (
-  <GameControls {...props} />
-));
-
-export default MemoizedGameControls;
+export default memo(GameControls);

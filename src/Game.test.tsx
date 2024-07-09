@@ -1,5 +1,4 @@
 import { DEFAULT_COLUMN_COUNT, DEFAULT_ROW_COUNT } from "./constants";
-import "@testing-library/jest-dom";
 import { act, fireEvent, render, screen } from "./test-utils";
 import Game from "./Game";
 

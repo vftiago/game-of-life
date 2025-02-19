@@ -60,7 +60,7 @@ const GameSettings = ({
           </Alert>
         )}
         <Checkbox
-          label="Show logs"
+          label="Show console logs"
           checked={showLogs}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             onClickShowLogs(e.target.checked);

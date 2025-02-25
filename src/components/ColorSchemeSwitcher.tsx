@@ -4,7 +4,8 @@ import {
   useComputedColorScheme,
 } from "@mantine/core";
 import { IconSun, IconMoon } from "@tabler/icons-react";
-import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
+import { useBreakpoints } from "../hooks/useBreakpoints";
+import { ScreenSize } from "../constants";
 
 export const ColorSchemeSwitcher = () => {
   const { width } = useBreakpoints();

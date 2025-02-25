@@ -3,7 +3,8 @@ import { Button, Flex, Title } from "@mantine/core";
 import { memo } from "react";
 import { ColorSchemeSwitcher } from "./ColorSchemeSwitcher";
 import { SettingsDrawerSwitcher } from "./SettingsDrawerSwitcher";
-import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
+import { useBreakpoints } from "../hooks/useBreakpoints";
+import { ScreenSize } from "../constants";
 
 type GameHeaderProps = {
   showLogs: boolean;

@@ -1,6 +1,7 @@
 import { IconMenu2 } from "@tabler/icons-react";
 import { ActionIcon } from "@mantine/core";
-import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
+import { useBreakpoints } from "../hooks/useBreakpoints";
+import { ScreenSize } from "../constants";
 
 type SettingsMenuSwitcherProps = {
   onClick: () => void;

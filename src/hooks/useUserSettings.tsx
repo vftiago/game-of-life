@@ -8,7 +8,7 @@ import {
 } from "../constants";
 import { useBreakpoints } from "./useBreakpoints";
 
-const useUserSettings = () => {
+export const useUserSettings = () => {
   const { height, width } = useBreakpoints();
   const [columnCount, setColumnCount] = useState<number>(
     MAX_COLUMN_COUNT[width],
@@ -34,5 +34,3 @@ const useUserSettings = () => {
     setShowLogs,
   };
 };
-
-export default useUserSettings;

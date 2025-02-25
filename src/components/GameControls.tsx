@@ -1,7 +1,8 @@
 import { Button, Flex } from "@mantine/core";
 import { memo } from "react";
-import { ScreenSize, useBreakpoints } from "../hooks/useBreakpoints";
+import { useBreakpoints } from "../hooks/useBreakpoints";
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
+import { ScreenSize } from "../constants";
 
 type GameControlsProps = {
   isRunning: boolean;

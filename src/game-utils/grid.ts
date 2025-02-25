@@ -1,8 +1,4 @@
-import {
-  DEFAULT_DENSITY,
-  DEFAULT_ROW_COUNT,
-  DEFAULT_COLUMN_COUNT,
-} from "../constants";
+import { DEFAULT_DENSITY } from "../constants";
 
 export type GameGridType = boolean[][];
 
@@ -11,15 +7,15 @@ const getFilledArray = (length: number) => {
 };
 
 export const getGrid = (
-  columnCount: number = DEFAULT_COLUMN_COUNT,
-  rowCount: number = DEFAULT_ROW_COUNT,
+  columnCount: number,
+  rowCount: number,
 ): GameGridType => {
   return getFilledArray(columnCount).map(() => getFilledArray(rowCount));
 };
 
 export const getRandomizedGrid = (
-  columnCount: number = DEFAULT_COLUMN_COUNT,
-  rowCount: number = DEFAULT_ROW_COUNT,
+  columnCount: number,
+  rowCount: number,
 ): GameGridType => {
   const grid = getGrid(columnCount, rowCount);
   const randomizedGrid = grid.map((column) =>

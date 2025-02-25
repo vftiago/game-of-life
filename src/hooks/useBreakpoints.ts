@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-
-export enum ScreenSize {
-  XxS = "xxs",
-  Xs = "xs",
-  Sm = "sm",
-  Md = "md",
-  Lg = "lg",
-  Xl = "xl",
-  Xxl = "xxl",
-}
+import { ScreenSize } from "../constants";
 
 const breakpoints = {
   [ScreenSize.XxS]: 0,

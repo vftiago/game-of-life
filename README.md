@@ -15,7 +15,7 @@ You can check it live on [https://gameoflife.vftiago.com/](https://gameoflife.vf
 
 ## Running the project locally
 
-To run the project, clone it, run `npm i`, and then run `npm start`. You should be able to see the game running on [http://localhost:5174](http://localhost:5174).
+To run the project, clone it, run `pnpm i`, and then run `pnpm start`. You should be able to see the game running on [http://localhost:5173](http://localhost:5173).
 
 ## Potential points of improvement
 
@@ -24,5 +24,5 @@ The following features could potentially increase the app's usability at little 
 - [x] Dynamically set up the initial board dimensions based on the browser window's inner height and width.
 - [x] Allow users to click each individual `Cell` to change its state to `dead` or `alive` when the game is paused.
   - [ ] As a follow-up, allow users to clear the board (set all cells to `dead`).
-- [ ] Allow users to change the time interval between ticks up to a sensible limit.
+- [x] Allow users to change the time interval between ticks up to a sensible limit.
 - [ ] Allow users to change cell size up to a sensible limit.

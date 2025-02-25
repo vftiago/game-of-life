@@ -5,6 +5,7 @@ import {
   Drawer,
   Flex,
   Group,
+  NativeSelect,
   Radio,
   Stack,
   Text,
@@ -17,10 +18,12 @@ import { IconInfoCircle } from "@tabler/icons-react";
 type GameSettingsProps = {
   isOpen: boolean;
   cellType: CellType;
+  interval: number;
   showLogs: boolean;
   isAlertVisible: boolean;
   onClose: () => void;
   onSelectCellType: (selection: CellType) => void;
+  onSelectInterval: (value: number) => void;
   onClickShowLogs: (checked: boolean) => void;
   onDismissAlert: () => void;
 };
@@ -28,9 +31,11 @@ type GameSettingsProps = {
 const GameSettings = ({
   isOpen,
   cellType,
+  interval,
   showLogs,
   isAlertVisible,
   onClose,
+  onSelectInterval,
   onSelectCellType,
   onClickShowLogs,
   onDismissAlert,
@@ -80,6 +85,16 @@ const GameSettings = ({
             <Radio value={CellType.Square} label="Square" />
           </Group>
         </Radio.Group>
+
+        <NativeSelect
+          label="Interval"
+          description="How much time between each step, in milliseconds (lower is faster)"
+          value={interval.toString()}
+          data={["80", "100", "200", "300", "500"]}
+          onChange={(event) => {
+            onSelectInterval(parseInt(event.currentTarget.value, 10));
+          }}
+        />
       </Stack>
     </Drawer>
   );

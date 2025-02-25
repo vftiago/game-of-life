@@ -1,3 +1,13 @@
+export enum ScreenSize {
+  XxS = "xxs",
+  Xs = "xs",
+  Sm = "sm",
+  Md = "md",
+  Lg = "lg",
+  Xl = "xl",
+  Xxl = "xxl",
+}
+
 export enum CellType {
   Square = "square",
   Dot = "dot",
@@ -23,9 +33,7 @@ export const MAX_ROW_COUNT = {
   xxl: 100,
 };
 
-export const DEFAULT_COLUMN_COUNT = MAX_COLUMN_COUNT.lg;
-export const DEFAULT_ROW_COUNT = MAX_ROW_COUNT.md;
-export const DEFAULT_INTERVAL = 88;
+export const DEFAULT_INTERVAL = 100;
 export const DEFAULT_DENSITY = 0.15;
 export const DEFAULT_CELL_SIZE = 9;
 export const DEFAULT_CELL_TYPE = CellType.Square;

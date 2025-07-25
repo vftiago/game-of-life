@@ -1,29 +1,27 @@
 import { Container, Divider } from "@mantine/core";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import GameControls from "./components/GameControls";
 import GameSettings from "./components/GameSettings";
 import GameHeader from "./components/GameHeader";
-import { CellType, MAX_COLUMN_COUNT, MAX_ROW_COUNT } from "./constants";
 import GameGrid from "./components/GameGrid";
 import { useDisclosure } from "@mantine/hooks";
-import { useBreakpoints } from "./hooks/useBreakpoints";
 import { useUserSettings } from "./hooks/useUserSettings";
 import { useInterval } from "./hooks/useInterval";
 import {
-  GameGridType,
-  getNextGrid,
-  getRandomizedGrid,
+  PseudoGrid,
+  applyRules,
+  createEmptyGrid,
+  randomizeGrid,
 } from "./game-utils/grid";
+import { useGridDimensions } from "./hooks/useGridSize";
 
 const Game = () => {
   const {
     cellType,
-    showLogs,
     interval,
     isAlertVisible,
     setCellType,
-    setShowLogs,
     setInterval,
     setIsAlertVisible,
   } = useUserSettings();
@@ -35,32 +33,48 @@ const Game = () => {
 
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [stepNumber, setStepNumber] = useState<number>(0);
-  const { height, width } = useBreakpoints();
-  const [grid, setGrid] = useState<GameGridType>(
-    getRandomizedGrid(MAX_COLUMN_COUNT[width], MAX_ROW_COUNT[height]),
-  );
+
+  const gridDimensions = useGridDimensions();
+
+  const initialGrid = useMemo(() => {
+    const emptyGrid = createEmptyGrid(gridDimensions);
+
+    const randomizedGrid = randomizeGrid({ grid: emptyGrid });
+
+    return applyRules({
+      grid: randomizedGrid,
+      gridDimensions,
+    });
+  }, [gridDimensions]);
+
+  const [grid, setGrid] = useState<PseudoGrid>(initialGrid);
 
   const reset = useCallback(() => {
     setIsRunning(false);
     setStepNumber(0);
-    setGrid(getRandomizedGrid(MAX_COLUMN_COUNT[width], MAX_ROW_COUNT[height]));
-  }, [height, width]);
+    setGrid(initialGrid);
+  }, [initialGrid]);
 
   const next = useCallback(() => {
     setStepNumber((prev) => prev + 1);
-    setGrid((prevGrid) => getNextGrid(prevGrid));
-  }, []);
+
+    setGrid((prevGrid: PseudoGrid) =>
+      applyRules({
+        grid: prevGrid,
+        gridDimensions,
+      }),
+    );
+  }, [gridDimensions]);
 
   const handleClickPlayPause = useCallback(() => {
     setIsRunning((prev) => !prev);
   }, []);
 
   const handleClickCell = useCallback(
-    (columnIndex: number, rowIndex: number, alive: boolean) => {
-      setGrid((prevGrid) => {
+    (index: number, alive: boolean) => {
+      setGrid((prevGrid: PseudoGrid) => {
         const newGrid = [...prevGrid];
-        newGrid[columnIndex] = [...newGrid[columnIndex]];
-        newGrid[columnIndex][rowIndex] = !alive;
+        newGrid[index] = !alive;
         return newGrid;
       });
     },
@@ -80,17 +94,10 @@ const Game = () => {
   );
 
   const handleSelectCellType = useCallback(
-    (selection: CellType) => {
+    (selection: "square" | "dot") => {
       setCellType(selection);
     },
     [setCellType],
-  );
-
-  const handleClickShowLogs = useCallback(
-    (checked: boolean) => {
-      setShowLogs(checked);
-    },
-    [setShowLogs],
   );
 
   const handleDismissAlert = useCallback(() => {
@@ -108,32 +115,25 @@ const Game = () => {
   useInterval(intervalCallback, interval);
 
   useEffect(() => {
-    window.addEventListener("resize", reset);
-    return () => window.removeEventListener("resize", reset);
+    reset();
   }, [reset]);
 
   return (
-    <Container size="lg">
+    <Container size="xl">
       <GameSettings
         interval={interval}
         isAlertVisible={isAlertVisible}
         isOpen={isGameSettingsOpen}
         cellType={cellType}
-        showLogs={showLogs}
         onClose={closeGameSettings}
         onSelectCellType={handleSelectCellType}
         onSelectInterval={handleSelectInterval}
-        onClickShowLogs={handleClickShowLogs}
         onDismissAlert={handleDismissAlert}
       />
-      <GameHeader
-        showLogs={showLogs}
-        onOpenSettingsMenu={handleOpenSettingsMenu}
-      />
+      <GameHeader onOpenSettingsMenu={handleOpenSettingsMenu} />
       <Divider />
       <GameControls
         isRunning={isRunning}
-        showLogs={showLogs}
         onClickPlayPause={handleClickPlayPause}
         onClickNext={next}
         onClickReset={reset}
@@ -141,11 +141,10 @@ const Game = () => {
       <Divider />
       <GameGrid
         isRunning={isRunning}
-        columnCount={MAX_COLUMN_COUNT[width]}
+        columnCount={gridDimensions.columnCount}
         stepNumber={stepNumber}
         cellType={cellType}
         grid={grid}
-        showLogs={showLogs}
         onClickCell={handleClickCell}
       />
     </Container>

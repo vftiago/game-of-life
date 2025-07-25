@@ -6,7 +6,6 @@ import { ScreenSize } from "../constants";
 
 type GameControlsProps = {
   isRunning: boolean;
-  showLogs: boolean;
   onClickPlayPause: () => void;
   onClickNext: () => void;
   onClickReset: () => void;
@@ -14,16 +13,11 @@ type GameControlsProps = {
 
 const GameControls = ({
   isRunning,
-  showLogs,
   onClickPlayPause,
   onClickNext,
   onClickReset,
 }: GameControlsProps) => {
   const { width } = useBreakpoints();
-
-  if (showLogs) {
-    console.info("GameControls rendered");
-  }
 
   return (
     <Flex align="center" justify="center" gap="1rem" p="1rem" w="100%">

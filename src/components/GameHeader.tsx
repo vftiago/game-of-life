@@ -7,15 +7,10 @@ import { useBreakpoints } from "../hooks/useBreakpoints";
 import { ScreenSize } from "../constants";
 
 type GameHeaderProps = {
-  showLogs: boolean;
   onOpenSettingsMenu: () => void;
 };
 
-const GameHeader = ({ showLogs, onOpenSettingsMenu }: GameHeaderProps) => {
-  if (showLogs) {
-    console.info("GameHeader rendered");
-  }
-
+const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
   const { width } = useBreakpoints();
 
   return (

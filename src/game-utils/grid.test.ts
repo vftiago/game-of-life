@@ -1,88 +1,104 @@
-import {
-  getGrid,
-  getLiveNeighbourCount,
-  getNextGrid,
-  getRandomizedGrid,
-} from "./grid";
+import { createEmptyGrid, getLiveNeighbourCount, applyRules } from "./grid";
 
 describe("getGrid", () => {
   it("should generate a grid with specified dimensions filled with dead cells", () => {
     const COLUMN_COUNT = 3;
-    const ROW_COUNT = 4;
+    const ROW_COUNT = 3;
 
-    const grid = getGrid(COLUMN_COUNT, ROW_COUNT);
+    const grid = createEmptyGrid({
+      columnCount: COLUMN_COUNT,
+      rowCount: ROW_COUNT,
+    });
 
-    expect(grid.length).toEqual(COLUMN_COUNT);
-    expect(grid[0].length).toEqual(ROW_COUNT);
-    expect(grid.flat().every((cell) => !cell)).toBe(true);
-  });
-});
-
-describe("getRandomizedGrid", () => {
-  it("should generate a grid with specified dimensions", () => {
-    const COLUMN_COUNT = 5;
-    const ROW_COUNT = 5;
-
-    const randomizedGrid = getRandomizedGrid(COLUMN_COUNT, ROW_COUNT);
-
-    expect(randomizedGrid.length).toEqual(COLUMN_COUNT);
-    expect(randomizedGrid[0].length).toEqual(ROW_COUNT);
+    expect(grid.length).toEqual(COLUMN_COUNT * ROW_COUNT);
+    expect(grid.every((cell) => !cell)).toBe(true);
   });
 });
 
 describe("getLiveNeighbourCount", () => {
   it("should accurately count living neighbors", () => {
-    const GRID = [
-      [false, true, false],
-      [false, true, false],
-      [false, true, false],
-    ];
+    const GRID = [false, true, false, false, false, false, false, true, false];
 
-    expect(getLiveNeighbourCount(GRID, 0, 0)).toEqual(2);
-    expect(getLiveNeighbourCount(GRID, 0, 1)).toEqual(1);
-    expect(getLiveNeighbourCount(GRID, 1, 1)).toEqual(2);
-    expect(getLiveNeighbourCount(GRID, 2, 1)).toEqual(1);
-    expect(getLiveNeighbourCount(GRID, 2, 2)).toEqual(2);
+    expect(
+      getLiveNeighbourCount({
+        grid: GRID,
+        x: 0,
+        y: 0,
+        columnCount: 3,
+        rowCount: 3,
+      }),
+    ).toEqual(1);
+
+    expect(
+      getLiveNeighbourCount({
+        grid: GRID,
+        x: 1,
+        y: 1,
+        columnCount: 3,
+        rowCount: 3,
+      }),
+    ).toEqual(2);
+
+    expect(
+      getLiveNeighbourCount({
+        grid: GRID,
+        x: 2,
+        y: 2,
+        columnCount: 3,
+        rowCount: 3,
+      }),
+    ).toEqual(1);
   });
 });
 
 describe("getNextGrid", () => {
+  const GRID_DIMENSIONS = {
+    columnCount: 4,
+    rowCount: 4,
+  };
+
   it("should correctly evolve a blinker pattern", () => {
     const INITIAL_GRID = [
-      [false, false, false],
-      [true, true, true],
-      [false, false, false],
-    ];
+      [false, false, false, false],
+      [false, true, true, true],
+      [false, false, false, false],
+      [false, false, false, false],
+    ].flat();
 
     const EXPECTED_GRID = [
-      [false, true, false],
-      [false, true, false],
-      [false, true, false],
-    ];
+      [false, false, true, false],
+      [false, false, true, false],
+      [false, false, true, false],
+      [false, false, false, false],
+    ].flat();
 
-    const nextGrid = getNextGrid(INITIAL_GRID);
+    const nextGrid = applyRules({
+      grid: INITIAL_GRID,
+      gridDimensions: GRID_DIMENSIONS,
+    });
 
     expect(nextGrid).toEqual(EXPECTED_GRID);
   });
 
   it("should correctly evolve a glider pattern", () => {
     const INITIAL_GRID = [
-      [false, true, false],
-      [false, false, true],
-      [true, true, true],
-      [false, false, false],
-      [false, false, false],
-    ];
+      [false, true, false, false],
+      [false, false, true, false],
+      [true, true, true, false],
+      [false, false, false, false],
+    ].flat();
 
     const EXPECTED_GRID = [
-      [false, false, false],
-      [true, false, true],
-      [false, true, true],
-      [false, true, false],
-      [false, false, false],
-    ];
+      [false, false, false, false],
+      [true, false, true, false],
+      [false, true, true, false],
+      [false, true, false, false],
+    ].flat();
 
-    const nextGrid = getNextGrid(INITIAL_GRID);
+    const nextGrid = applyRules({
+      grid: INITIAL_GRID,
+      gridDimensions: GRID_DIMENSIONS,
+    });
 
     expect(nextGrid).toEqual(EXPECTED_GRID);
   });
@@ -93,16 +109,20 @@ describe("getNextGrid", () => {
       [false, true, true, true],
       [true, true, true, false],
       [false, false, false, false],
-    ];
+    ].flat();
 
     const EXPECTED_GRID = [
       [false, false, true, false],
       [true, false, false, true],
       [true, false, false, true],
       [false, true, false, false],
-    ];
+    ].flat();
 
-    const nextGrid = getNextGrid(INITIAL_GRID);
+    const nextGrid = applyRules({
+      grid: INITIAL_GRID,
+      gridDimensions: GRID_DIMENSIONS,
+    });
+
     expect(nextGrid).toEqual(EXPECTED_GRID);
   });
 });

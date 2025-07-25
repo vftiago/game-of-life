@@ -1,4 +1,38 @@
+.grid {
+  display: grid;
+  gap: 2px;
+}
+
+.cell {
+  height: 9px;
+  width: 9px;
+}
+
 .cell:hover {
   border: 2px solid orange;
   cursor: pointer;
+}
+
+.cell--alive--light {
+  background-color: #242424;
+}
+
+.cell--dead--light {
+  background-color: #ffffff;
+}
+
+.cell--alive--dark {
+  background-color: #ffffff;
+}
+
+.cell--dead--dark {
+  background-color: #242424;
+}
+
+.cell--dot {
+  border-radius: 50%;
+}
+
+.cell--square {
+  border-radius: 15%;
 }

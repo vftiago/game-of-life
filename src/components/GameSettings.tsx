@@ -1,7 +1,6 @@
 import {
   Alert,
   Button,
-  Checkbox,
   Drawer,
   Flex,
   Group,
@@ -11,20 +10,17 @@ import {
   Text,
 } from "@mantine/core";
 
-import { ChangeEvent, memo } from "react";
-import { CellType } from "../constants";
+import { memo } from "react";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 type GameSettingsProps = {
   isOpen: boolean;
-  cellType: CellType;
+  cellType: "square" | "dot";
   interval: number;
-  showLogs: boolean;
   isAlertVisible: boolean;
   onClose: () => void;
-  onSelectCellType: (selection: CellType) => void;
+  onSelectCellType: (selection: "square" | "dot") => void;
   onSelectInterval: (value: number) => void;
-  onClickShowLogs: (checked: boolean) => void;
   onDismissAlert: () => void;
 };
 
@@ -32,18 +28,12 @@ const GameSettings = ({
   isOpen,
   cellType,
   interval,
-  showLogs,
   isAlertVisible,
   onClose,
   onSelectInterval,
   onSelectCellType,
-  onClickShowLogs,
   onDismissAlert,
 }: GameSettingsProps) => {
-  if (showLogs) {
-    console.info("GameSettings rendered");
-  }
-
   return (
     <Drawer
       opened={isOpen}
@@ -64,25 +54,18 @@ const GameSettings = ({
             </Flex>
           </Alert>
         )}
-        <Checkbox
-          label="Show console logs"
-          checked={showLogs}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            onClickShowLogs(e.target.checked);
-          }}
-        />
 
         <Radio.Group
           label="Cell type"
           description="The difference is purely cosmetic"
           onChange={(value: string) => {
-            onSelectCellType(value as CellType);
+            onSelectCellType(value as "square" | "dot");
           }}
           value={cellType}
         >
           <Group mt="xs">
-            <Radio value={CellType.Dot} label="Dot" />
-            <Radio value={CellType.Square} label="Square" />
+            <Radio value="dot" label="Dot" />
+            <Radio value="square" label="Square" />
           </Group>
         </Radio.Group>
 
@@ -90,7 +73,7 @@ const GameSettings = ({
           label="Interval"
           description="How much time between each step, in milliseconds (lower is faster)"
           value={interval.toString()}
-          data={["80", "100", "200", "300", "500"]}
+          data={["20", "50", "100", "300", "500"]}
           onChange={(event) => {
             onSelectInterval(parseInt(event.currentTarget.value, 10));
           }}

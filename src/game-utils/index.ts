@@ -1,6 +1,6 @@
 export {
-  getGrid,
-  getRandomizedGrid,
+  createEmptyGrid,
+  randomizeGrid,
   getLiveNeighbourCount,
-  getNextGrid,
+  applyRules,
 } from "./grid";

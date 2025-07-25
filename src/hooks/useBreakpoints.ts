@@ -8,7 +8,6 @@ const breakpoints = {
   [ScreenSize.Md]: 768,
   [ScreenSize.Lg]: 1024,
   [ScreenSize.Xl]: 1200,
-  [ScreenSize.Xxl]: 1540,
 };
 
 const getScreenSize = () => {

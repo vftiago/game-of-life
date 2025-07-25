@@ -1,88 +1,101 @@
-import { DEFAULT_DENSITY } from "../constants";
+import { CELL_NEIGHBOURS, DEFAULT_DENSITY } from "../constants";
 
-export type GameGridType = boolean[][];
+export type PseudoGrid = Array<boolean>;
 
-const getFilledArray = (length: number) => {
-  return new Array(length).fill(false);
+export type GridDimensions = {
+  columnCount: number;
+  rowCount: number;
 };
 
-export const getGrid = (
-  columnCount: number,
-  rowCount: number,
-): GameGridType => {
-  return getFilledArray(columnCount).map(() => getFilledArray(rowCount));
+export type CellPosition = {
+  x: number;
+  y: number;
 };
 
-export const getRandomizedGrid = (
-  columnCount: number,
-  rowCount: number,
-): GameGridType => {
-  const grid = getGrid(columnCount, rowCount);
-  const randomizedGrid = grid.map((column) =>
-    column.map(() => Math.random() < DEFAULT_DENSITY),
-  );
-
-  // make the initial state slightly more interesting
-  return getNextGrid(randomizedGrid);
+export const createEmptyGrid = ({
+  columnCount,
+  rowCount,
+}: GridDimensions): PseudoGrid => {
+  return new Array(columnCount * rowCount).fill(false);
 };
 
-export const getLiveNeighbourCount = (
-  grid: GameGridType,
-  columnIndex: number,
-  rowIndex: number,
-): number => {
-  let liveNeighboutCount = 0;
+export const randomizeGrid = ({
+  grid,
+  density = DEFAULT_DENSITY,
+}: {
+  grid: PseudoGrid;
+  density?: number;
+}): PseudoGrid => {
+  const length = grid.length;
+  const result = new Array(length);
 
-  if (grid[columnIndex][rowIndex - 1]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex][rowIndex + 1]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex + 1]?.[rowIndex]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex + 1]?.[rowIndex - 1]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex + 1]?.[rowIndex + 1]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex - 1]?.[rowIndex]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex - 1]?.[rowIndex - 1]) {
-    liveNeighboutCount += 1;
-  }
-  if (grid[columnIndex - 1]?.[rowIndex + 1]) {
-    liveNeighboutCount += 1;
+  for (let i = 0; i < length; i++) {
+    result[i] = Math.random() < density;
   }
 
-  return liveNeighboutCount;
+  return result;
 };
 
-export const getNextGrid = (grid: GameGridType): GameGridType => {
-  const newGrid = getGrid(grid.length, grid[0].length);
+export const getLiveNeighbourCount = ({
+  grid,
+  x,
+  y,
+  columnCount,
+  rowCount,
+}: {
+  grid: PseudoGrid;
+  x: number;
+  y: number;
+  columnCount: number;
+  rowCount: number;
+}): number => {
+  let count = 0;
 
-  grid.forEach((column, columnIndex) => {
-    column.forEach((alive, rowIndex) => {
-      const liveNeighbourCount = getLiveNeighbourCount(
-        grid,
-        columnIndex,
-        rowIndex,
-      );
+  for (const { x: dx, y: dy } of CELL_NEIGHBOURS) {
+    const nx = x + dx;
+    const ny = y + dy;
 
-      if (alive) {
-        if (liveNeighbourCount === 2 || liveNeighbourCount === 3) {
-          newGrid[columnIndex][rowIndex] = true;
-        }
-      } else {
-        if (liveNeighbourCount === 3) {
-          newGrid[columnIndex][rowIndex] = true;
-        }
+    if (nx >= 0 && nx < columnCount && ny >= 0 && ny < rowCount) {
+      const index = nx + ny * columnCount;
+
+      if (grid[index]) {
+        count++;
       }
+    }
+  }
+
+  return count;
+};
+
+export const applyRules = ({
+  grid,
+  gridDimensions,
+}: {
+  grid: PseudoGrid;
+  gridDimensions: GridDimensions;
+}): PseudoGrid => {
+  const { columnCount, rowCount } = gridDimensions;
+  const length = grid.length;
+  const newGrid = new Array(length);
+
+  for (let i = 0; i < length; i++) {
+    const x = i % columnCount;
+    const y = Math.floor(i / columnCount);
+    const isAlive = grid[i];
+    const liveNeighbours = getLiveNeighbourCount({
+      grid,
+      x,
+      y,
+      columnCount,
+      rowCount,
     });
-  });
+
+    if (isAlive) {
+      newGrid[i] = liveNeighbours === 2 || liveNeighbours === 3;
+    } else {
+      newGrid[i] = liveNeighbours === 3;
+    }
+  }
 
   return newGrid;
 };

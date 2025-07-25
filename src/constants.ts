@@ -1,3 +1,14 @@
+export const CELL_NEIGHBOURS = [
+  { x: -1, y: -1 },
+  { x: 0, y: -1 },
+  { x: 1, y: -1 },
+  { x: -1, y: 0 },
+  { x: 1, y: 0 },
+  { x: -1, y: 1 },
+  { x: 0, y: 1 },
+  { x: 1, y: 1 },
+];
+
 export enum ScreenSize {
   XxS = "xxs",
   Xs = "xs",
@@ -5,35 +16,26 @@ export enum ScreenSize {
   Md = "md",
   Lg = "lg",
   Xl = "xl",
-  Xxl = "xxl",
 }
 
-export enum CellType {
-  Square = "square",
-  Dot = "dot",
-}
-
-export const MAX_COLUMN_COUNT = {
+export const COLUMN_COUNT = {
   xxs: 20,
   xs: 30,
   sm: 45,
   md: 60,
-  lg: 70,
-  xl: 80,
-  xxl: 100,
+  lg: 75,
+  xl: 90,
 };
 
-export const MAX_ROW_COUNT = {
-  xxs: 10,
-  xs: 20,
-  sm: 30,
-  md: 45,
-  lg: 70,
+export const ROW_COUNT = {
+  xxs: 5,
+  xs: 10,
+  sm: 25,
+  md: 40,
+  lg: 60,
   xl: 80,
-  xxl: 100,
 };
 
-export const DEFAULT_INTERVAL = 100;
+export const DEFAULT_INTERVAL = 20;
 export const DEFAULT_DENSITY = 0.15;
-export const DEFAULT_CELL_SIZE = 9;
-export const DEFAULT_CELL_TYPE = CellType.Square;
+export const DEFAULT_CELL_TYPE = "square";

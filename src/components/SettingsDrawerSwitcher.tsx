@@ -14,7 +14,7 @@ export const SettingsDrawerSwitcher = ({
 
   return (
     <ActionIcon
-      size={width === ScreenSize.XxS ? "md" : "lg"}
+      size={width === ScreenSize.XXS ? "md" : "lg"}
       variant="default"
       onClick={onClick}
       aria-label="Open settings menu"

@@ -16,7 +16,7 @@ export const ColorSchemeSwitcher = () => {
 
   return (
     <ActionIcon
-      size={width === ScreenSize.XxS ? "md" : "lg"}
+      size={width === ScreenSize.XXS ? "md" : "lg"}
       onClick={() =>
         setColorScheme(computedColorScheme === "light" ? "dark" : "light")
       }

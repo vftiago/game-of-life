@@ -10,12 +10,12 @@ export const CELL_NEIGHBOURS = [
 ];
 
 export enum ScreenSize {
-  XxS = "xxs",
-  Xs = "xs",
-  Sm = "sm",
-  Md = "md",
-  Lg = "lg",
-  Xl = "xl",
+  XXS = "xxs",
+  XS = "xs",
+  SM = "sm",
+  MD = "md",
+  LG = "lg",
+  XL = "xl",
 }
 
 export const COLUMN_COUNT = {

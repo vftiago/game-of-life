@@ -22,7 +22,7 @@ const GameControls = ({
   return (
     <Flex align="center" justify="center" gap="1rem" p="1rem" w="100%">
       <Button
-        size={width === ScreenSize.XxS ? "compact-sm" : "sm"}
+        size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
         onClick={onClickReset}
         variant="gradient"
       >
@@ -30,17 +30,17 @@ const GameControls = ({
       </Button>
       <Button
         aria-label={isRunning ? "Pause" : "Play"}
-        fz={width === ScreenSize.XxS ? 10 : undefined}
+        fz={width === ScreenSize.XXS ? 10 : undefined}
         radius="50%"
         onClick={onClickPlayPause}
-        h={width === ScreenSize.XxS ? "4rem" : "5rem"}
-        w={width === ScreenSize.XxS ? "4rem" : "5rem"}
+        h={width === ScreenSize.XXS ? "4rem" : "5rem"}
+        w={width === ScreenSize.XXS ? "4rem" : "5rem"}
         variant="gradient"
       >
         {isRunning ? <IconPlayerPause /> : <IconPlayerPlay />}
       </Button>
       <Button
-        size={width === ScreenSize.XxS ? "compact-sm" : "sm"}
+        size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
         onClick={onClickNext}
         variant="gradient"
       >

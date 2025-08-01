@@ -17,7 +17,7 @@ const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
     <Flex direction="column" align="center" p="1rem" gap="1rem">
       <Flex justify="space-between" w="100%" align="center">
         <SettingsDrawerSwitcher onClick={onOpenSettingsMenu} />
-        <Title fz={width === ScreenSize.XxS ? 20 : undefined}>
+        <Title fz={width === ScreenSize.XXS ? 20 : undefined}>
           Game of Life
         </Title>
         <ColorSchemeSwitcher />
@@ -26,7 +26,7 @@ const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
         <Button
           variant="default"
           rightSection={<IconExternalLink size={16} />}
-          size={width === ScreenSize.XxS ? "xs" : "sm"}
+          size={width === ScreenSize.XXS ? "xs" : "sm"}
         >
           GitHub
         </Button>

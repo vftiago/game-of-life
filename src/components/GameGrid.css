@@ -8,8 +8,8 @@
   width: 9px;
 }
 
-.cell:hover {
-  border: 2px solid orange;
+.cell--hover:hover {
+  background-color: orange;
   cursor: pointer;
 }
 

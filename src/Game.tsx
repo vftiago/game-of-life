@@ -1,5 +1,5 @@
 import { Container, Divider } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import GameControls from "./components/GameControls";
 import GameSettings from "./components/GameSettings";
@@ -12,10 +12,16 @@ import { PseudoGrid, applyRules } from "./game-utils/grid";
 import { useGridState } from "./hooks/useGridState";
 
 const Game = () => {
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [stepNumber, setStepNumber] = useState<number>(0);
-
-  const { gridDimensions, grid, setGrid, resetGrid } = useGridState();
+  const {
+    isRunning,
+    setIsRunning,
+    stepNumber,
+    setStepNumber,
+    gridDimensions,
+    grid,
+    setGrid,
+    resetGrid,
+  } = useGridState();
 
   const {
     cellType,
@@ -40,17 +46,15 @@ const Game = () => {
         gridDimensions,
       }),
     );
-  }, [gridDimensions, setGrid]);
+  }, [gridDimensions, setGrid, setStepNumber]);
 
   const reset = useCallback(() => {
-    setStepNumber(0);
-    setIsRunning(false);
     resetGrid();
   }, [resetGrid]);
 
   const handleClickPlayPause = useCallback(() => {
     setIsRunning((prev) => !prev);
-  }, []);
+  }, [setIsRunning]);
 
   const handleClickCell = useCallback(
     (index: number, alive: boolean) => {

@@ -1,54 +1,102 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { useBreakpoints } from "./useBreakpoints";
 import { COLUMN_COUNT, ROW_COUNT } from "../constants";
 import { createEmptyGrid, randomizeGrid } from "../game-utils";
 import { PseudoGrid } from "../game-utils/grid";
 
-export const useGridState = () => {
-  const { height, width } = useBreakpoints();
+type GridState = {
+  gridDimensions: {
+    columnCount: number;
+    rowCount: number;
+  };
+  grid: PseudoGrid;
+};
 
-  const [gridDimensions, setGridDimensions] = useState({
-    columnCount: COLUMN_COUNT[width],
-    rowCount: ROW_COUNT[height],
-  });
+export const useGridState = () => {
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [stepNumber, setStepNumber] = useState<number>(0);
+
+  const { height, width } = useBreakpoints();
 
   const initialGridRef = useRef<PseudoGrid | null>(null);
 
-  const createInitialGrid = useCallback((dimensions: typeof gridDimensions) => {
-    const newInitialGrid = randomizeGrid({
-      grid: createEmptyGrid(dimensions),
-    });
+  const createInitialGrid = useCallback(
+    (dimensions: GridState["gridDimensions"]) => {
+      const newInitialGrid = randomizeGrid({
+        grid: createEmptyGrid(dimensions),
+      });
 
-    initialGridRef.current = newInitialGrid;
+      initialGridRef.current = newInitialGrid;
+      return newInitialGrid;
+    },
+    [],
+  );
 
-    return newInitialGrid;
-  }, []);
+  const [gridState, setGridState] = useState<GridState>(() => {
+    const initialDimensions = {
+      columnCount: COLUMN_COUNT[width],
+      rowCount: ROW_COUNT[height],
+    };
 
-  const [grid, setGrid] = useState<PseudoGrid>(() =>
-    createInitialGrid(gridDimensions),
+    return {
+      gridDimensions: initialDimensions,
+      grid: createInitialGrid(initialDimensions),
+    };
+  });
+
+  const setGrid = useCallback(
+    (gridOrUpdater: PseudoGrid | ((prev: PseudoGrid) => PseudoGrid)) => {
+      setGridState((prevState) => ({
+        ...prevState,
+        grid:
+          typeof gridOrUpdater === "function"
+            ? gridOrUpdater(prevState.grid)
+            : gridOrUpdater,
+      }));
+    },
+    [],
   );
 
   const resetGrid = useCallback(() => {
     if (initialGridRef.current) {
-      setGrid([...initialGridRef.current]);
+      setStepNumber(0);
+      setIsRunning(false);
+      setGridState((prevState) => ({
+        ...prevState,
+        grid: [...initialGridRef.current!],
+      }));
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const newDimensions = {
       columnCount: COLUMN_COUNT[width],
       rowCount: ROW_COUNT[height],
     };
 
     if (
-      newDimensions.columnCount !== gridDimensions.columnCount ||
-      newDimensions.rowCount !== gridDimensions.rowCount
+      newDimensions.columnCount !== gridState.gridDimensions.columnCount ||
+      newDimensions.rowCount !== gridState.gridDimensions.rowCount
     ) {
-      setGridDimensions(newDimensions);
       const newInitialGrid = createInitialGrid(newDimensions);
-      setGrid(newInitialGrid);
-    }
-  }, [width, height, gridDimensions, createInitialGrid]);
 
-  return { gridDimensions, setGridDimensions, grid, setGrid, resetGrid };
+      setStepNumber(0);
+      setIsRunning(false);
+      setGridState({
+        gridDimensions: newDimensions,
+        grid: newInitialGrid,
+      });
+    }
+  }, [width, height, gridState.gridDimensions, createInitialGrid]);
+
+  return {
+    isRunning,
+    setIsRunning,
+    stepNumber,
+    setStepNumber,
+    grid: gridState.grid,
+    gridDimensions: gridState.gridDimensions,
+    setGrid,
+    resetGrid,
+  };
 };

@@ -1,9 +1,8 @@
 import { Flex, Stack } from "@mantine/core";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { useMantineColorScheme } from "@mantine/core";
 import "./GameGrid.css";
 import { PseudoGrid } from "../game-utils/grid";
-import clsx from "clsx";
 
 type GameGridProps = {
   isRunning: boolean;
@@ -24,6 +23,14 @@ const GameGrid = ({
 }: GameGridProps) => {
   const { colorScheme } = useMantineColorScheme();
 
+  const cellClasses = useMemo(() => {
+    const baseClass = `cell cell--${cellType} ${isRunning ? "" : "cell--hover"}`;
+    const aliveClass = `${baseClass} cell--alive--${colorScheme}`;
+    const deadClass = `${baseClass} cell--dead--${colorScheme}`;
+
+    return { aliveClass, deadClass };
+  }, [cellType, colorScheme, isRunning]);
+
   return (
     <Stack>
       <div data-testid="step-number">Step: {stepNumber}</div>
@@ -37,14 +44,9 @@ const GameGrid = ({
             return (
               <div
                 key={index}
-                className={clsx("cell", {
-                  "cell--dot": cellType === "dot",
-                  "cell--square": cellType === "square",
-                  "cell--alive--light": cell && colorScheme === "light",
-                  "cell--alive--dark": cell && colorScheme === "dark",
-                  "cell--dead--light": !cell && colorScheme === "light",
-                  "cell--dead--dark": !cell && colorScheme === "dark",
-                })}
+                className={
+                  cell ? cellClasses.aliveClass : cellClasses.deadClass
+                }
                 onClick={() => {
                   if (isRunning) return;
                   onClickCell(index, cell);

@@ -37,17 +37,13 @@ export const randomizeGrid = ({
 };
 
 export const getLiveNeighbourCount = ({
+  cellPosition: { x, y },
   grid,
-  x,
-  y,
-  columnCount,
-  rowCount,
+  gridDimensions: { columnCount, rowCount },
 }: {
+  cellPosition: CellPosition;
   grid: PseudoGrid;
-  x: number;
-  y: number;
-  columnCount: number;
-  rowCount: number;
+  gridDimensions: GridDimensions;
 }): number => {
   let count = 0;
 
@@ -74,20 +70,22 @@ export const applyRules = ({
   grid: PseudoGrid;
   gridDimensions: GridDimensions;
 }): PseudoGrid => {
-  const { columnCount, rowCount } = gridDimensions;
+  const { columnCount } = gridDimensions;
   const length = grid.length;
   const newGrid = new Array(length);
 
   for (let i = 0; i < length; i++) {
-    const x = i % columnCount;
-    const y = Math.floor(i / columnCount);
+    const cellPosition = {
+      x: i % columnCount,
+      y: Math.floor(i / columnCount),
+    };
+
     const isAlive = grid[i];
+
     const liveNeighbours = getLiveNeighbourCount({
+      cellPosition,
       grid,
-      x,
-      y,
-      columnCount,
-      rowCount,
+      gridDimensions,
     });
 
     if (isAlive) {

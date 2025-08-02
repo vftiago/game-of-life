@@ -1,5 +1,5 @@
 import { Container, Divider } from "@mantine/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import GameControls from "./components/GameControls";
 import GameSettings from "./components/GameSettings";
@@ -8,15 +8,15 @@ import GameGrid from "./components/GameGrid";
 import { useDisclosure } from "@mantine/hooks";
 import { useUserSettings } from "./hooks/useUserSettings";
 import { useInterval } from "./hooks/useInterval";
-import {
-  PseudoGrid,
-  applyRules,
-  createEmptyGrid,
-  randomizeGrid,
-} from "./game-utils/grid";
-import { useGridDimensions } from "./hooks/useGridSize";
+import { PseudoGrid, applyRules } from "./game-utils/grid";
+import { useGridState } from "./hooks/useGridState";
 
 const Game = () => {
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [stepNumber, setStepNumber] = useState<number>(0);
+
+  const { gridDimensions, grid, setGrid, resetGrid } = useGridState();
+
   const {
     cellType,
     interval,
@@ -31,30 +31,6 @@ const Game = () => {
     { open: openGameSettings, close: closeGameSettings },
   ] = useDisclosure(false);
 
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [stepNumber, setStepNumber] = useState<number>(0);
-
-  const gridDimensions = useGridDimensions();
-
-  const initialGrid = useMemo(() => {
-    const emptyGrid = createEmptyGrid(gridDimensions);
-
-    const randomizedGrid = randomizeGrid({ grid: emptyGrid });
-
-    return applyRules({
-      grid: randomizedGrid,
-      gridDimensions,
-    });
-  }, [gridDimensions]);
-
-  const [grid, setGrid] = useState<PseudoGrid>(initialGrid);
-
-  const reset = useCallback(() => {
-    setIsRunning(false);
-    setStepNumber(0);
-    setGrid(initialGrid);
-  }, [initialGrid]);
-
   const next = useCallback(() => {
     setStepNumber((prev) => prev + 1);
 
@@ -64,7 +40,13 @@ const Game = () => {
         gridDimensions,
       }),
     );
-  }, [gridDimensions]);
+  }, [gridDimensions, setGrid]);
+
+  const reset = useCallback(() => {
+    setStepNumber(0);
+    setIsRunning(false);
+    resetGrid();
+  }, [resetGrid]);
 
   const handleClickPlayPause = useCallback(() => {
     setIsRunning((prev) => !prev);
@@ -113,10 +95,6 @@ const Game = () => {
   }, [isRunning, next]);
 
   useInterval(intervalCallback, interval);
-
-  useEffect(() => {
-    reset();
-  }, [reset]);
 
   return (
     <Container size="xl">

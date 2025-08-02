@@ -21,31 +21,43 @@ describe("getLiveNeighbourCount", () => {
 
     expect(
       getLiveNeighbourCount({
+        cellPosition: {
+          x: 0,
+          y: 0,
+        },
         grid: GRID,
-        x: 0,
-        y: 0,
-        columnCount: 3,
-        rowCount: 3,
+        gridDimensions: {
+          columnCount: 3,
+          rowCount: 3,
+        },
       }),
     ).toEqual(1);
 
     expect(
       getLiveNeighbourCount({
+        cellPosition: {
+          x: 1,
+          y: 1,
+        },
         grid: GRID,
-        x: 1,
-        y: 1,
-        columnCount: 3,
-        rowCount: 3,
+        gridDimensions: {
+          columnCount: 3,
+          rowCount: 3,
+        },
       }),
     ).toEqual(2);
 
     expect(
       getLiveNeighbourCount({
+        cellPosition: {
+          x: 2,
+          y: 2,
+        },
         grid: GRID,
-        x: 2,
-        y: 2,
-        columnCount: 3,
-        rowCount: 3,
+        gridDimensions: {
+          columnCount: 3,
+          rowCount: 3,
+        },
       }),
     ).toEqual(1);
   });

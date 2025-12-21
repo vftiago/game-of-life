@@ -35,12 +35,7 @@ const GameSettings = ({
   onDismissAlert,
 }: GameSettingsProps) => {
   return (
-    <Drawer
-      opened={isOpen}
-      onClose={onClose}
-      title="Game settings"
-      overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-    >
+    <Drawer opened={isOpen} onClose={onClose} title="Game settings">
       <Stack>
         {isAlertVisible && (
           <Alert color="blue" icon={<IconInfoCircle />}>

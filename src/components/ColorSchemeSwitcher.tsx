@@ -1,8 +1,4 @@
-import {
-  ActionIcon,
-  useMantineColorScheme,
-  useComputedColorScheme,
-} from "@mantine/core";
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from "@mantine/core";
 import { IconSun, IconMoon } from "@tabler/icons-react";
 import { ScreenSize } from "../constants";
 import { useBreakpoints } from "../hooks/useBreakpoints";
@@ -19,9 +15,7 @@ export const ColorSchemeSwitcher = () => {
       aria-label="Toggle color scheme"
       size={width === ScreenSize.XXS ? "md" : "lg"}
       variant="default"
-      onClick={() =>
-        setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-      }
+      onClick={() => setColorScheme(computedColorScheme === "light" ? "dark" : "light")}
     >
       {colorScheme === "dark" ? <IconSun size={20} /> : <IconMoon size={20} />}
     </ActionIcon>

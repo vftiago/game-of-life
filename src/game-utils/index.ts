@@ -1,6 +1,1 @@
-export {
-  createEmptyGrid,
-  randomizeGrid,
-  getLiveNeighbourCount,
-  applyRules,
-} from "./grid";
+export { createEmptyGrid, randomizeGrid, getLiveNeighbourCount, applyRules } from "./grid";

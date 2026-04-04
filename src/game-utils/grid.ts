@@ -12,10 +12,7 @@ export type CellPosition = {
   y: number;
 };
 
-export const createEmptyGrid = ({
-  columnCount,
-  rowCount,
-}: GridDimensions): PseudoGrid => {
+export const createEmptyGrid = ({ columnCount, rowCount }: GridDimensions): PseudoGrid => {
   return new Array(columnCount * rowCount).fill(false);
 };
 

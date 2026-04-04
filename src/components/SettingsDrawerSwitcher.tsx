@@ -7,9 +7,7 @@ type SettingsMenuSwitcherProps = {
   onClick: () => void;
 };
 
-export const SettingsDrawerSwitcher = ({
-  onClick,
-}: SettingsMenuSwitcherProps) => {
+export const SettingsDrawerSwitcher = ({ onClick }: SettingsMenuSwitcherProps) => {
   const { width } = useBreakpoints();
 
   return (

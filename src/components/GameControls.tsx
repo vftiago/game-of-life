@@ -11,21 +11,12 @@ type GameControlsProps = {
   onClickReset: () => void;
 };
 
-const GameControls = ({
-  isRunning,
-  onClickNext,
-  onClickPlayPause,
-  onClickReset,
-}: GameControlsProps) => {
+const GameControls = ({ isRunning, onClickNext, onClickPlayPause, onClickReset }: GameControlsProps) => {
   const { width } = useBreakpoints();
 
   return (
     <Flex align="center" gap="1rem" justify="center" p="1rem" w="100%">
-      <Button
-        size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
-        variant="gradient"
-        onClick={onClickReset}
-      >
+      <Button size={width === ScreenSize.XXS ? "compact-sm" : "sm"} variant="gradient" onClick={onClickReset}>
         Reset
       </Button>
       <Button
@@ -39,11 +30,7 @@ const GameControls = ({
       >
         {isRunning ? <IconPlayerPause /> : <IconPlayerPlay />}
       </Button>
-      <Button
-        size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
-        variant="gradient"
-        onClick={onClickNext}
-      >
+      <Button size={width === ScreenSize.XXS ? "compact-sm" : "sm"} variant="gradient" onClick={onClickNext}>
         Next
       </Button>
     </Flex>

@@ -24,14 +24,7 @@ export default defineConfig([
       "perfectionist/sort-imports": [
         "warn",
         {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-          ],
+          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
           ignoreCase: true,
           newlinesBetween: 0,
           order: "asc",

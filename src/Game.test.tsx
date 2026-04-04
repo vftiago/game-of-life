@@ -1,13 +1,5 @@
 import { cleanup } from "@testing-library/react";
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type Mock,
-} from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi, type Mock } from "vitest";
 import { COLUMN_COUNT, ROW_COUNT } from "./constants";
 import Game from "./Game";
 import { useBreakpoints } from "./hooks/useBreakpoints";

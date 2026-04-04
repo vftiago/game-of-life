@@ -20,17 +20,14 @@ export const useGridState = () => {
 
   const initialGridRef = useRef<PseudoGrid | null>(null);
 
-  const createInitialGrid = useCallback(
-    (dimensions: GridState["gridDimensions"]) => {
-      const newInitialGrid = randomizeGrid({
-        grid: createEmptyGrid(dimensions),
-      });
+  const createInitialGrid = useCallback((dimensions: GridState["gridDimensions"]) => {
+    const newInitialGrid = randomizeGrid({
+      grid: createEmptyGrid(dimensions),
+    });
 
-      initialGridRef.current = newInitialGrid;
-      return newInitialGrid;
-    },
-    [],
-  );
+    initialGridRef.current = newInitialGrid;
+    return newInitialGrid;
+  }, []);
 
   //eslint-disable-next-line react-hooks/refs
   const [gridState, setGridState] = useState<GridState>(() => {
@@ -45,18 +42,12 @@ export const useGridState = () => {
     };
   });
 
-  const setGrid = useCallback(
-    (gridOrUpdater: PseudoGrid | ((prev: PseudoGrid) => PseudoGrid)) => {
-      setGridState((prevState) => ({
-        ...prevState,
-        grid:
-          typeof gridOrUpdater === "function"
-            ? gridOrUpdater(prevState.grid)
-            : gridOrUpdater,
-      }));
-    },
-    [],
-  );
+  const setGrid = useCallback((gridOrUpdater: PseudoGrid | ((prev: PseudoGrid) => PseudoGrid)) => {
+    setGridState((prevState) => ({
+      ...prevState,
+      grid: typeof gridOrUpdater === "function" ? gridOrUpdater(prevState.grid) : gridOrUpdater,
+    }));
+  }, []);
 
   const resetGrid = useCallback(() => {
     if (initialGridRef.current) {

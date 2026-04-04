@@ -11,30 +11,12 @@ import { useInterval } from "./hooks/useInterval";
 import { useUserSettings } from "./hooks/useUserSettings";
 
 const Game = () => {
-  const {
-    grid,
-    gridDimensions,
-    isRunning,
-    resetGrid,
-    setGrid,
-    setIsRunning,
-    setStepNumber,
-    stepNumber,
-  } = useGridState();
+  const { grid, gridDimensions, isRunning, resetGrid, setGrid, setIsRunning, setStepNumber, stepNumber } =
+    useGridState();
 
-  const {
-    cellType,
-    interval,
-    isAlertVisible,
-    setCellType,
-    setInterval,
-    setIsAlertVisible,
-  } = useUserSettings();
+  const { cellType, interval, isAlertVisible, setCellType, setInterval, setIsAlertVisible } = useUserSettings();
 
-  const [
-    isGameSettingsOpen,
-    { close: closeGameSettings, open: openGameSettings },
-  ] = useDisclosure(false);
+  const [isGameSettingsOpen, { close: closeGameSettings, open: openGameSettings }] = useDisclosure(false);
 
   const next = useCallback(() => {
     setStepNumber((prev) => prev + 1);

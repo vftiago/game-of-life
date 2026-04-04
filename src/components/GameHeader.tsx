@@ -17,9 +17,7 @@ const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
     <Flex align="center" direction="column" gap="1rem" p="1rem">
       <Flex align="center" justify="space-between" w="100%">
         <SettingsDrawerSwitcher onClick={onOpenSettingsMenu} />
-        <Title fz={width === ScreenSize.XXS ? 20 : undefined}>
-          Game of Life
-        </Title>
+        <Title fz={width === ScreenSize.XXS ? 20 : undefined}>Game of Life</Title>
         <ColorSchemeSwitcher />
       </Flex>
       <a href="https://github.com/vftiago/game-of-life" target="_blank">

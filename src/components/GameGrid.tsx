@@ -13,14 +13,7 @@ type GameGridProps = {
   onClickCell: (index: number, cell: boolean) => void;
 };
 
-const GameGrid = ({
-  cellType,
-  columnCount,
-  grid,
-  isRunning,
-  onClickCell,
-  stepNumber,
-}: GameGridProps) => {
+const GameGrid = ({ cellType, columnCount, grid, isRunning, onClickCell, stepNumber }: GameGridProps) => {
   const { colorScheme } = useMantineColorScheme();
 
   const cellClasses = useMemo(() => {
@@ -35,17 +28,11 @@ const GameGrid = ({
     <Stack>
       <div data-testid="step-number">Step: {stepNumber}</div>
       <Flex align="center" justify="center">
-        <div
-          className="grid"
-          data-testid="game-grid"
-          style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}
-        >
+        <div className="grid" data-testid="game-grid" style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}>
           {grid.map((cell: boolean, index: number) => {
             return (
               <div
-                className={
-                  cell ? cellClasses.aliveClass : cellClasses.deadClass
-                }
+                className={cell ? cellClasses.aliveClass : cellClasses.deadClass}
                 key={index}
                 onClick={() => {
                   if (isRunning) return;

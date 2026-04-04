@@ -1,14 +1,4 @@
-import {
-  Alert,
-  Button,
-  Drawer,
-  Flex,
-  Group,
-  NativeSelect,
-  Radio,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Alert, Button, Drawer, Flex, Group, NativeSelect, Radio, Stack, Text } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { memo } from "react";
 
@@ -39,9 +29,7 @@ const GameSettings = ({
         {isAlertVisible && (
           <Alert color="blue" icon={<IconInfoCircle />}>
             <Flex align="flex-start" direction="column" gap="1rem">
-              <Text size="sm">
-                Opening the settings menu will pause the game
-              </Text>
+              <Text size="sm">Opening the settings menu will pause the game</Text>
               <Button size="xs" onClick={onDismissAlert}>
                 Ok
               </Button>

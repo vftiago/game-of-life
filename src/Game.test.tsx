@@ -1,36 +1,43 @@
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  vi,
+  type Mock,
+} from "vitest";
+import { cleanup } from "@testing-library/react";
 import { COLUMN_COUNT, ROW_COUNT } from "./constants";
 import { act, fireEvent, render, screen } from "./test-utils";
 import Game from "./Game";
 import { useBreakpoints } from "./hooks/useBreakpoints";
 import { useInterval } from "./hooks/useInterval";
 
-jest.mock("./hooks/useInterval");
-jest.mock("./hooks/useBreakpoints");
+vi.mock("./hooks/useInterval");
+vi.mock("./hooks/useBreakpoints");
 
 const DEFAULT_STEPS_TO_TEST = 3;
 
 describe("<Game />", () => {
   let intervalCallback: (() => void) | null = null;
 
-  beforeAll(() => {
-    (useBreakpoints as jest.Mock).mockReturnValue({
+  beforeEach(() => {
+    (useBreakpoints as Mock).mockReturnValue({
       height: "xs",
       width: "xs",
     });
 
-    (useInterval as jest.Mock).mockImplementation((callback) => {
+    (useInterval as Mock).mockImplementation((callback) => {
       intervalCallback = callback;
     });
-  });
-
-  beforeEach(() => {
-    jest.clearAllMocks();
 
     render(<Game />);
   });
 
   afterEach(() => {
     intervalCallback = null;
+    cleanup();
   });
 
   it("should render initial UI elements with correct dimensions", () => {

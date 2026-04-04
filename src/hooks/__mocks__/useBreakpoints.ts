@@ -1,2 +1,4 @@
 // __mocks__/hooks/useBreakpoints.ts
-export const useBreakpoints = jest.fn();
+import { vi } from "vitest";
+
+export const useBreakpoints = vi.fn();

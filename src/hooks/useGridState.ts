@@ -32,6 +32,7 @@ export const useGridState = () => {
     [],
   );
 
+  //eslint-disable-next-line react-hooks/refs
   const [gridState, setGridState] = useState<GridState>(() => {
     const initialDimensions = {
       columnCount: COLUMN_COUNT[width],

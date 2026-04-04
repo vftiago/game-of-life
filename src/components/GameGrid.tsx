@@ -4,6 +4,25 @@ import { memo, useMemo } from "react";
 import "./GameGrid.css";
 import { PseudoGrid } from "../game-utils/grid";
 
+type CellProps = {
+  alive: number;
+  aliveClass: string;
+  deadClass: string;
+  index: number;
+  isRunning: boolean;
+  onClickCell: (index: number, cell: number) => void;
+};
+
+const Cell = memo(({ alive, aliveClass, deadClass, index, isRunning, onClickCell }: CellProps) => (
+  <div
+    className={alive ? aliveClass : deadClass}
+    onClick={() => {
+      if (isRunning) return;
+      onClickCell(index, alive);
+    }}
+  />
+));
+
 type GameGridProps = {
   cellType: "dot" | "square";
   columnCount: number;
@@ -26,15 +45,15 @@ const GameGrid = ({ cellType, columnCount, grid, isRunning, onClickCell, stepNum
 
   const cells = [];
   for (let i = 0; i < grid.length; i++) {
-    const cell = grid[i];
     cells.push(
-      <div
-        className={cell ? cellClasses.aliveClass : cellClasses.deadClass}
+      <Cell
+        alive={grid[i]}
+        aliveClass={cellClasses.aliveClass}
+        deadClass={cellClasses.deadClass}
+        index={i}
+        isRunning={isRunning}
         key={i}
-        onClick={() => {
-          if (isRunning) return;
-          onClickCell(i, cell);
-        }}
+        onClickCell={onClickCell}
       />,
     );
   }

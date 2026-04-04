@@ -43,7 +43,7 @@ export const useGridState = () => {
     setIsRunning(false);
     setGridData((prev) => ({
       ...prev,
-      grid: [...prev.initialGrid],
+      grid: prev.initialGrid.slice(),
     }));
   }, []);
 

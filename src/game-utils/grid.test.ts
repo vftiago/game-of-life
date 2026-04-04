@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { createEmptyGrid, getLiveNeighbourCount, applyRules } from "./grid";
+import { describe, expect, it } from "vitest";
+import { applyRules, createEmptyGrid, getLiveNeighbourCount } from "./grid";
 
 describe("getGrid", () => {
   it("should generate a grid with specified dimensions filled with dead cells", () => {
@@ -12,53 +12,35 @@ describe("getGrid", () => {
     });
 
     expect(grid.length).toEqual(COLUMN_COUNT * ROW_COUNT);
-    expect(grid.every((cell) => !cell)).toBe(true);
+    expect(grid.every((cell) => cell === 0)).toBe(true);
   });
 });
 
 describe("getLiveNeighbourCount", () => {
   it("should accurately count living neighbors", () => {
-    const GRID = [false, true, false, false, false, false, false, true, false];
+    const GRID = new Uint8Array([0, 1, 0, 0, 0, 0, 0, 1, 0]);
 
     expect(
       getLiveNeighbourCount({
-        cellPosition: {
-          x: 0,
-          y: 0,
-        },
+        cellPosition: { x: 0, y: 0 },
         grid: GRID,
-        gridDimensions: {
-          columnCount: 3,
-          rowCount: 3,
-        },
+        gridDimensions: { columnCount: 3, rowCount: 3 },
       }),
     ).toEqual(1);
 
     expect(
       getLiveNeighbourCount({
-        cellPosition: {
-          x: 1,
-          y: 1,
-        },
+        cellPosition: { x: 1, y: 1 },
         grid: GRID,
-        gridDimensions: {
-          columnCount: 3,
-          rowCount: 3,
-        },
+        gridDimensions: { columnCount: 3, rowCount: 3 },
       }),
     ).toEqual(2);
 
     expect(
       getLiveNeighbourCount({
-        cellPosition: {
-          x: 2,
-          y: 2,
-        },
+        cellPosition: { x: 2, y: 2 },
         grid: GRID,
-        gridDimensions: {
-          columnCount: 3,
-          rowCount: 3,
-        },
+        gridDimensions: { columnCount: 3, rowCount: 3 },
       }),
     ).toEqual(1);
   });
@@ -71,19 +53,21 @@ describe("getNextGrid", () => {
   };
 
   it("should correctly evolve a blinker pattern", () => {
-    const INITIAL_GRID = [
-      [false, false, false, false],
-      [false, true, true, true],
-      [false, false, false, false],
-      [false, false, false, false],
-    ].flat();
+    // prettier-ignore
+    const INITIAL_GRID = new Uint8Array([
+      0, 0, 0, 0,
+      0, 1, 1, 1,
+      0, 0, 0, 0,
+      0, 0, 0, 0,
+    ]);
 
-    const EXPECTED_GRID = [
-      [false, false, true, false],
-      [false, false, true, false],
-      [false, false, true, false],
-      [false, false, false, false],
-    ].flat();
+    // prettier-ignore
+    const EXPECTED_GRID = new Uint8Array([
+      0, 0, 1, 0,
+      0, 0, 1, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 0,
+    ]);
 
     const nextGrid = applyRules({
       grid: INITIAL_GRID,
@@ -94,19 +78,21 @@ describe("getNextGrid", () => {
   });
 
   it("should correctly evolve a glider pattern", () => {
-    const INITIAL_GRID = [
-      [false, true, false, false],
-      [false, false, true, false],
-      [true, true, true, false],
-      [false, false, false, false],
-    ].flat();
+    // prettier-ignore
+    const INITIAL_GRID = new Uint8Array([
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      1, 1, 1, 0,
+      0, 0, 0, 0,
+    ]);
 
-    const EXPECTED_GRID = [
-      [false, false, false, false],
-      [true, false, true, false],
-      [false, true, true, false],
-      [false, true, false, false],
-    ].flat();
+    // prettier-ignore
+    const EXPECTED_GRID = new Uint8Array([
+      0, 0, 0, 0,
+      1, 0, 1, 0,
+      0, 1, 1, 0,
+      0, 1, 0, 0,
+    ]);
 
     const nextGrid = applyRules({
       grid: INITIAL_GRID,
@@ -117,19 +103,21 @@ describe("getNextGrid", () => {
   });
 
   it("should correctly evolve a toad pattern", () => {
-    const INITIAL_GRID = [
-      [false, false, false, false],
-      [false, true, true, true],
-      [true, true, true, false],
-      [false, false, false, false],
-    ].flat();
+    // prettier-ignore
+    const INITIAL_GRID = new Uint8Array([
+      0, 0, 0, 0,
+      0, 1, 1, 1,
+      1, 1, 1, 0,
+      0, 0, 0, 0,
+    ]);
 
-    const EXPECTED_GRID = [
-      [false, false, true, false],
-      [true, false, false, true],
-      [true, false, false, true],
-      [false, true, false, false],
-    ].flat();
+    // prettier-ignore
+    const EXPECTED_GRID = new Uint8Array([
+      0, 0, 1, 0,
+      1, 0, 0, 1,
+      1, 0, 0, 1,
+      0, 1, 0, 0,
+    ]);
 
     const nextGrid = applyRules({
       grid: INITIAL_GRID,

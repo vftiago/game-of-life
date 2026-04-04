@@ -30,10 +30,10 @@ const Game = () => {
   }, [columnCount, rowCount, setGrid, setStepNumber]);
 
   const handleClickCell = useCallback(
-    (index: number, alive: boolean) => {
+    (index: number, alive: number) => {
       setGrid((prevGrid: PseudoGrid) => {
-        const newGrid = [...prevGrid];
-        newGrid[index] = !alive;
+        const newGrid = prevGrid.slice();
+        newGrid[index] = alive ? 0 : 1;
         return newGrid;
       });
     },

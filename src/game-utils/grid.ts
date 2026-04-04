@@ -1,6 +1,6 @@
 import { CELL_NEIGHBOURS, DEFAULT_DENSITY } from "../constants";
 
-export type PseudoGrid = Array<boolean>;
+export type PseudoGrid = Uint8Array;
 
 export type GridDimensions = {
   columnCount: number;
@@ -13,21 +13,21 @@ export type CellPosition = {
 };
 
 export const createEmptyGrid = ({ columnCount, rowCount }: GridDimensions): PseudoGrid => {
-  return new Array(columnCount * rowCount).fill(false);
+  return new Uint8Array(columnCount * rowCount);
 };
 
 export const randomizeGrid = ({
   density = DEFAULT_DENSITY,
   grid,
 }: {
-  grid: PseudoGrid;
   density?: number;
+  grid: PseudoGrid;
 }): PseudoGrid => {
   const length = grid.length;
-  const result = new Array(length);
+  const result = new Uint8Array(length);
 
   for (let i = 0; i < length; i++) {
-    result[i] = Math.random() < density;
+    result[i] = Math.random() < density ? 1 : 0;
   }
 
   return result;
@@ -69,7 +69,7 @@ export const applyRules = ({
 }): PseudoGrid => {
   const { columnCount } = gridDimensions;
   const length = grid.length;
-  const newGrid = new Array(length);
+  const newGrid = new Uint8Array(length);
 
   for (let i = 0; i < length; i++) {
     const cellPosition = {
@@ -86,9 +86,9 @@ export const applyRules = ({
     });
 
     if (isAlive) {
-      newGrid[i] = liveNeighbours === 2 || liveNeighbours === 3;
+      newGrid[i] = liveNeighbours === 2 || liveNeighbours === 3 ? 1 : 0;
     } else {
-      newGrid[i] = liveNeighbours === 3;
+      newGrid[i] = liveNeighbours === 3 ? 1 : 0;
     }
   }
 

@@ -5,12 +5,12 @@ import "./GameGrid.css";
 import { PseudoGrid } from "../game-utils/grid";
 
 type GameGridProps = {
-  isRunning: boolean;
-  columnCount: number;
-  stepNumber: number;
   cellType: "dot" | "square";
+  columnCount: number;
   grid: PseudoGrid;
-  onClickCell: (index: number, cell: boolean) => void;
+  isRunning: boolean;
+  stepNumber: number;
+  onClickCell: (index: number, cell: number) => void;
 };
 
 const GameGrid = ({ cellType, columnCount, grid, isRunning, onClickCell, stepNumber }: GameGridProps) => {
@@ -24,23 +24,27 @@ const GameGrid = ({ cellType, columnCount, grid, isRunning, onClickCell, stepNum
     return { aliveClass, deadClass };
   }, [cellType, colorScheme, isRunning]);
 
+  const cells = [];
+  for (let i = 0; i < grid.length; i++) {
+    const cell = grid[i];
+    cells.push(
+      <div
+        className={cell ? cellClasses.aliveClass : cellClasses.deadClass}
+        key={i}
+        onClick={() => {
+          if (isRunning) return;
+          onClickCell(i, cell);
+        }}
+      />,
+    );
+  }
+
   return (
     <Stack>
       <div data-testid="step-number">Step: {stepNumber}</div>
       <Flex align="center" justify="center">
         <div className="grid" data-testid="game-grid" style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}>
-          {grid.map((cell: boolean, index: number) => {
-            return (
-              <div
-                className={cell ? cellClasses.aliveClass : cellClasses.deadClass}
-                key={index}
-                onClick={() => {
-                  if (isRunning) return;
-                  onClickCell(index, cell);
-                }}
-              />
-            );
-          })}
+          {cells}
         </div>
       </Flex>
     </Stack>

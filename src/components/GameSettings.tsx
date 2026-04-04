@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Flex, Group, NativeSelect, Radio, Stack, Text } from "@mantine/core";
+import { Alert, Button, Drawer, Flex, Group, Radio, Select, Stack, Text } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { memo } from "react";
 
@@ -51,13 +51,14 @@ const GameSettings = ({
           </Group>
         </Radio.Group>
 
-        <NativeSelect
+        <Select
+          allowDeselect={false}
           data={["20", "50", "100", "300", "500"]}
           description="How much time between each step, in milliseconds (lower is faster)"
           label="Interval"
           value={interval.toString()}
-          onChange={(event) => {
-            onSelectInterval(parseInt(event.currentTarget.value, 10));
+          onChange={(value) => {
+            if (value) onSelectInterval(parseInt(value, 10));
           }}
         />
       </Stack>

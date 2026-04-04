@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { COLUMN_COUNT, ROW_COUNT } from "../constants";
-import { createEmptyGrid, randomizeGrid } from "../game-utils";
-import { PseudoGrid } from "../game-utils/grid";
+import { PseudoGrid, createEmptyGrid, randomizeGrid } from "../game-utils/grid";
 import { useBreakpoints } from "./useBreakpoints";
 
 type GridData = {

@@ -10,12 +10,9 @@ export default defineConfig([
   reactHooks.configs.flat.recommended,
   {
     languageOptions: {
-      ecmaVersion: "latest",
       globals: {
         ...globals.browser,
-        ...globals.node,
       },
-      sourceType: "module",
     },
     plugins: {
       perfectionist,

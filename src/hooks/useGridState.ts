@@ -1,91 +1,59 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { COLUMN_COUNT, ROW_COUNT } from "../constants";
 import { createEmptyGrid, randomizeGrid } from "../game-utils";
 import { PseudoGrid } from "../game-utils/grid";
 import { useBreakpoints } from "./useBreakpoints";
 
-type GridState = {
-  gridDimensions: {
-    columnCount: number;
-    rowCount: number;
-  };
+type GridData = {
   grid: PseudoGrid;
+  initialGrid: PseudoGrid;
+};
+
+const buildInitialGrid = (columnCount: number, rowCount: number) => {
+  const grid = randomizeGrid({ grid: createEmptyGrid({ columnCount, rowCount }) });
+  return { grid, initialGrid: grid };
 };
 
 export const useGridState = () => {
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [stepNumber, setStepNumber] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [stepNumber, setStepNumber] = useState(0);
 
   const { height, width } = useBreakpoints();
+  const columnCount = COLUMN_COUNT[width];
+  const rowCount = ROW_COUNT[height];
 
-  const initialGridRef = useRef<PseudoGrid | null>(null);
+  const [gridData, setGridData] = useState<GridData>(() => buildInitialGrid(columnCount, rowCount));
+  const [prevDimensions, setPrevDimensions] = useState({ columnCount, rowCount });
 
-  const createInitialGrid = useCallback((dimensions: GridState["gridDimensions"]) => {
-    const newInitialGrid = randomizeGrid({
-      grid: createEmptyGrid(dimensions),
-    });
-
-    initialGridRef.current = newInitialGrid;
-    return newInitialGrid;
-  }, []);
-
-  //eslint-disable-next-line react-hooks/refs
-  const [gridState, setGridState] = useState<GridState>(() => {
-    const initialDimensions = {
-      columnCount: COLUMN_COUNT[width],
-      rowCount: ROW_COUNT[height],
-    };
-
-    return {
-      grid: createInitialGrid(initialDimensions),
-      gridDimensions: initialDimensions,
-    };
-  });
+  if (columnCount !== prevDimensions.columnCount || rowCount !== prevDimensions.rowCount) {
+    setPrevDimensions({ columnCount, rowCount });
+    setGridData(buildInitialGrid(columnCount, rowCount));
+    setStepNumber(0);
+    setIsRunning(false);
+  }
 
   const setGrid = useCallback((gridOrUpdater: PseudoGrid | ((prev: PseudoGrid) => PseudoGrid)) => {
-    setGridState((prevState) => ({
-      ...prevState,
-      grid: typeof gridOrUpdater === "function" ? gridOrUpdater(prevState.grid) : gridOrUpdater,
+    setGridData((prev) => ({
+      ...prev,
+      grid: typeof gridOrUpdater === "function" ? gridOrUpdater(prev.grid) : gridOrUpdater,
     }));
   }, []);
 
   const resetGrid = useCallback(() => {
-    if (initialGridRef.current) {
-      setStepNumber(0);
-      setIsRunning(false);
-      setGridState((prevState) => ({
-        ...prevState,
-        grid: [...initialGridRef.current!],
-      }));
-    }
+    setStepNumber(0);
+    setIsRunning(false);
+    setGridData((prev) => ({
+      ...prev,
+      grid: [...prev.initialGrid],
+    }));
   }, []);
 
-  useLayoutEffect(() => {
-    const newDimensions = {
-      columnCount: COLUMN_COUNT[width],
-      rowCount: ROW_COUNT[height],
-    };
-
-    if (
-      newDimensions.columnCount !== gridState.gridDimensions.columnCount ||
-      newDimensions.rowCount !== gridState.gridDimensions.rowCount
-    ) {
-      const newInitialGrid = createInitialGrid(newDimensions);
-
-      setStepNumber(0);
-      setIsRunning(false);
-      setGridState({
-        grid: newInitialGrid,
-        gridDimensions: newDimensions,
-      });
-    }
-  }, [width, height, gridState.gridDimensions, createInitialGrid]);
-
   return {
-    grid: gridState.grid,
-    gridDimensions: gridState.gridDimensions,
+    columnCount,
+    grid: gridData.grid,
     isRunning,
     resetGrid,
+    rowCount,
     setGrid,
     setIsRunning,
     setStepNumber,

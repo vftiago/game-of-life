@@ -20,8 +20,8 @@ export const createEmptyGrid = ({
 };
 
 export const randomizeGrid = ({
-  grid,
   density = DEFAULT_DENSITY,
+  grid,
 }: {
   grid: PseudoGrid;
   density?: number;

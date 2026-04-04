@@ -1,26 +1,25 @@
 import { Container, Divider } from "@mantine/core";
-import { useCallback } from "react";
-
-import GameControls from "./components/GameControls";
-import GameSettings from "./components/GameSettings";
-import GameHeader from "./components/GameHeader";
-import GameGrid from "./components/GameGrid";
 import { useDisclosure } from "@mantine/hooks";
-import { useUserSettings } from "./hooks/useUserSettings";
-import { useInterval } from "./hooks/useInterval";
+import { useCallback } from "react";
+import GameControls from "./components/GameControls";
+import GameGrid from "./components/GameGrid";
+import GameHeader from "./components/GameHeader";
+import GameSettings from "./components/GameSettings";
 import { PseudoGrid, applyRules } from "./game-utils/grid";
 import { useGridState } from "./hooks/useGridState";
+import { useInterval } from "./hooks/useInterval";
+import { useUserSettings } from "./hooks/useUserSettings";
 
 const Game = () => {
   const {
-    isRunning,
-    setIsRunning,
-    stepNumber,
-    setStepNumber,
-    gridDimensions,
     grid,
-    setGrid,
+    gridDimensions,
+    isRunning,
     resetGrid,
+    setGrid,
+    setIsRunning,
+    setStepNumber,
+    stepNumber,
   } = useGridState();
 
   const {
@@ -34,7 +33,7 @@ const Game = () => {
 
   const [
     isGameSettingsOpen,
-    { open: openGameSettings, close: closeGameSettings },
+    { close: closeGameSettings, open: openGameSettings },
   ] = useDisclosure(false);
 
   const next = useCallback(() => {
@@ -103,30 +102,30 @@ const Game = () => {
   return (
     <Container size="xl">
       <GameSettings
+        cellType={cellType}
         interval={interval}
         isAlertVisible={isAlertVisible}
         isOpen={isGameSettingsOpen}
-        cellType={cellType}
         onClose={closeGameSettings}
+        onDismissAlert={handleDismissAlert}
         onSelectCellType={handleSelectCellType}
         onSelectInterval={handleSelectInterval}
-        onDismissAlert={handleDismissAlert}
       />
       <GameHeader onOpenSettingsMenu={handleOpenSettingsMenu} />
       <Divider />
       <GameControls
         isRunning={isRunning}
-        onClickPlayPause={handleClickPlayPause}
         onClickNext={next}
+        onClickPlayPause={handleClickPlayPause}
         onClickReset={reset}
       />
       <Divider />
       <GameGrid
-        isRunning={isRunning}
-        columnCount={gridDimensions.columnCount}
-        stepNumber={stepNumber}
         cellType={cellType}
+        columnCount={gridDimensions.columnCount}
         grid={grid}
+        isRunning={isRunning}
+        stepNumber={stepNumber}
         onClickCell={handleClickCell}
       />
     </Container>

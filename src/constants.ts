@@ -19,21 +19,21 @@ export enum ScreenSize {
 }
 
 export const COLUMN_COUNT = {
-  xxs: 20,
-  xs: 30,
-  sm: 45,
-  md: 60,
   lg: 75,
+  md: 60,
+  sm: 45,
   xl: 90,
+  xs: 30,
+  xxs: 20,
 };
 
 export const ROW_COUNT = {
-  xxs: 5,
-  xs: 10,
-  sm: 25,
-  md: 40,
   lg: 60,
+  md: 40,
+  sm: 25,
   xl: 80,
+  xs: 10,
+  xxs: 5,
 };
 
 export const DEFAULT_INTERVAL = 20;

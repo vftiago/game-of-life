@@ -9,9 +9,8 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-
-import { memo } from "react";
 import { IconInfoCircle } from "@tabler/icons-react";
+import { memo } from "react";
 
 type GameSettingsProps = {
   isOpen: boolean;
@@ -25,21 +24,21 @@ type GameSettingsProps = {
 };
 
 const GameSettings = ({
-  isOpen,
   cellType,
   interval,
   isAlertVisible,
+  isOpen,
   onClose,
-  onSelectInterval,
-  onSelectCellType,
   onDismissAlert,
+  onSelectCellType,
+  onSelectInterval,
 }: GameSettingsProps) => {
   return (
-    <Drawer opened={isOpen} onClose={onClose} title="Game settings">
+    <Drawer opened={isOpen} title="Game settings" onClose={onClose}>
       <Stack>
         {isAlertVisible && (
           <Alert color="blue" icon={<IconInfoCircle />}>
-            <Flex direction="column" gap="1rem" align="flex-start">
+            <Flex align="flex-start" direction="column" gap="1rem">
               <Text size="sm">
                 Opening the settings menu will pause the game
               </Text>
@@ -51,24 +50,24 @@ const GameSettings = ({
         )}
 
         <Radio.Group
-          label="Cell type"
           description="The difference is purely cosmetic"
+          label="Cell type"
+          value={cellType}
           onChange={(value: string) => {
             onSelectCellType(value as "square" | "dot");
           }}
-          value={cellType}
         >
           <Group mt="xs">
-            <Radio value="dot" label="Dot" />
-            <Radio value="square" label="Square" />
+            <Radio label="Dot" value="dot" />
+            <Radio label="Square" value="square" />
           </Group>
         </Radio.Group>
 
         <NativeSelect
-          label="Interval"
-          description="How much time between each step, in milliseconds (lower is faster)"
-          value={interval.toString()}
           data={["20", "50", "100", "300", "500"]}
+          description="How much time between each step, in milliseconds (lower is faster)"
+          label="Interval"
+          value={interval.toString()}
           onChange={(event) => {
             onSelectInterval(parseInt(event.currentTarget.value, 10));
           }}

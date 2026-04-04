@@ -7,11 +7,11 @@ export const useUserSettings = () => {
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(true);
 
   return {
-    isAlertVisible,
-    interval,
     cellType,
-    setIsAlertVisible,
-    setInterval,
+    interval,
+    isAlertVisible,
     setCellType,
+    setInterval,
+    setIsAlertVisible,
   };
 };

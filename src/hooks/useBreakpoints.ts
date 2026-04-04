@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { ScreenSize } from "../constants";
 
 const breakpoints = {
-  [ScreenSize.XXS]: 0,
-  [ScreenSize.XS]: 375,
-  [ScreenSize.SM]: 576,
-  [ScreenSize.MD]: 768,
   [ScreenSize.LG]: 1024,
+  [ScreenSize.MD]: 768,
+  [ScreenSize.SM]: 576,
   [ScreenSize.XL]: 1200,
+  [ScreenSize.XS]: 375,
+  [ScreenSize.XXS]: 0,
 };
 
 const getScreenSize = () => {

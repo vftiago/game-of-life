@@ -1,6 +1,6 @@
 import { Flex, Stack } from "@mantine/core";
-import { memo, useMemo } from "react";
 import { useMantineColorScheme } from "@mantine/core";
+import { memo, useMemo } from "react";
 import "./GameGrid.css";
 import { PseudoGrid } from "../game-utils/grid";
 
@@ -14,12 +14,12 @@ type GameGridProps = {
 };
 
 const GameGrid = ({
-  isRunning,
-  grid,
-  stepNumber,
   cellType,
-  onClickCell,
   columnCount,
+  grid,
+  isRunning,
+  onClickCell,
+  stepNumber,
 }: GameGridProps) => {
   const { colorScheme } = useMantineColorScheme();
 
@@ -34,19 +34,19 @@ const GameGrid = ({
   return (
     <Stack>
       <div data-testid="step-number">Step: {stepNumber}</div>
-      <Flex justify="center" align="center">
+      <Flex align="center" justify="center">
         <div
-          data-testid="game-grid"
           className="grid"
+          data-testid="game-grid"
           style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}
         >
           {grid.map((cell: boolean, index: number) => {
             return (
               <div
-                key={index}
                 className={
                   cell ? cellClasses.aliveClass : cellClasses.deadClass
                 }
+                key={index}
                 onClick={() => {
                   if (isRunning) return;
                   onClickCell(index, cell);

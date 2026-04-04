@@ -1,10 +1,10 @@
-import { IconExternalLink } from "@tabler/icons-react";
 import { Button, Flex, Title } from "@mantine/core";
+import { IconExternalLink } from "@tabler/icons-react";
 import { memo } from "react";
+import { ScreenSize } from "../constants";
+import { useBreakpoints } from "../hooks/useBreakpoints";
 import { ColorSchemeSwitcher } from "./ColorSchemeSwitcher";
 import { SettingsDrawerSwitcher } from "./SettingsDrawerSwitcher";
-import { useBreakpoints } from "../hooks/useBreakpoints";
-import { ScreenSize } from "../constants";
 
 type GameHeaderProps = {
   onOpenSettingsMenu: () => void;
@@ -14,8 +14,8 @@ const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
   const { width } = useBreakpoints();
 
   return (
-    <Flex direction="column" align="center" p="1rem" gap="1rem">
-      <Flex justify="space-between" w="100%" align="center">
+    <Flex align="center" direction="column" gap="1rem" p="1rem">
+      <Flex align="center" justify="space-between" w="100%">
         <SettingsDrawerSwitcher onClick={onOpenSettingsMenu} />
         <Title fz={width === ScreenSize.XXS ? 20 : undefined}>
           Game of Life
@@ -24,9 +24,9 @@ const GameHeader = ({ onOpenSettingsMenu }: GameHeaderProps) => {
       </Flex>
       <a href="https://github.com/vftiago/game-of-life" target="_blank">
         <Button
-          variant="default"
           rightSection={<IconExternalLink size={16} />}
           size={width === ScreenSize.XXS ? "xs" : "sm"}
+          variant="default"
         >
           GitHub
         </Button>

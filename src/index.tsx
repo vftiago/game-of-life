@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
+import React from "react";
+import "@mantine/core/styles.css";
+import ReactDOM from "react-dom/client";
 import Game from "./Game";
 
 const root = ReactDOM.createRoot(

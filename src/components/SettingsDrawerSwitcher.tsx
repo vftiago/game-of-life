@@ -1,7 +1,7 @@
-import { IconMenu2 } from "@tabler/icons-react";
 import { ActionIcon } from "@mantine/core";
-import { useBreakpoints } from "../hooks/useBreakpoints";
+import { IconMenu2 } from "@tabler/icons-react";
 import { ScreenSize } from "../constants";
+import { useBreakpoints } from "../hooks/useBreakpoints";
 
 type SettingsMenuSwitcherProps = {
   onClick: () => void;
@@ -14,10 +14,10 @@ export const SettingsDrawerSwitcher = ({
 
   return (
     <ActionIcon
+      aria-label="Open settings menu"
       size={width === ScreenSize.XXS ? "md" : "lg"}
       variant="default"
       onClick={onClick}
-      aria-label="Open settings menu"
     >
       <IconMenu2 size={20} />
     </ActionIcon>

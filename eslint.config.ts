@@ -1,6 +1,7 @@
+import perfectionist from "eslint-plugin-perfectionist";
+import reactHooks from "eslint-plugin-react-hooks";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
@@ -15,6 +16,49 @@ export default defineConfig([
         ...globals.node,
       },
       sourceType: "module",
+    },
+    plugins: {
+      perfectionist,
+    },
+    rules: {
+      "perfectionist/sort-imports": [
+        "warn",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
+          ignoreCase: true,
+          newlinesBetween: 0,
+          order: "asc",
+          type: "alphabetical",
+        },
+      ],
+      "perfectionist/sort-jsx-props": [
+        "warn",
+        {
+          customGroups: [
+            { groupName: "shorthand", modifiers: ["shorthand"] },
+            { elementNamePattern: "^on.+", groupName: "callback" },
+          ],
+          groups: ["shorthand", "unknown", "callback"],
+          ignoreCase: true,
+          order: "asc",
+          type: "alphabetical",
+        },
+      ],
+      "perfectionist/sort-objects": [
+        "warn",
+        {
+          ignoreCase: true,
+          order: "asc",
+          type: "alphabetical",
+        },
+      ],
     },
   },
 ]);

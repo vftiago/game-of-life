@@ -1,3 +1,4 @@
+import { cleanup } from "@testing-library/react";
 import {
   describe,
   it,
@@ -7,12 +8,11 @@ import {
   vi,
   type Mock,
 } from "vitest";
-import { cleanup } from "@testing-library/react";
 import { COLUMN_COUNT, ROW_COUNT } from "./constants";
-import { act, fireEvent, render, screen } from "./test-utils";
 import Game from "./Game";
 import { useBreakpoints } from "./hooks/useBreakpoints";
 import { useInterval } from "./hooks/useInterval";
+import { act, fireEvent, render, screen } from "./test-utils";
 
 vi.mock("./hooks/useInterval");
 vi.mock("./hooks/useBreakpoints");

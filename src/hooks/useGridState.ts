@@ -1,8 +1,8 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { useBreakpoints } from "./useBreakpoints";
 import { COLUMN_COUNT, ROW_COUNT } from "../constants";
 import { createEmptyGrid, randomizeGrid } from "../game-utils";
 import { PseudoGrid } from "../game-utils/grid";
+import { useBreakpoints } from "./useBreakpoints";
 
 type GridState = {
   gridDimensions: {
@@ -40,8 +40,8 @@ export const useGridState = () => {
     };
 
     return {
-      gridDimensions: initialDimensions,
       grid: createInitialGrid(initialDimensions),
+      gridDimensions: initialDimensions,
     };
   });
 
@@ -84,20 +84,20 @@ export const useGridState = () => {
       setStepNumber(0);
       setIsRunning(false);
       setGridState({
-        gridDimensions: newDimensions,
         grid: newInitialGrid,
+        gridDimensions: newDimensions,
       });
     }
   }, [width, height, gridState.gridDimensions, createInitialGrid]);
 
   return {
-    isRunning,
-    setIsRunning,
-    stepNumber,
-    setStepNumber,
     grid: gridState.grid,
     gridDimensions: gridState.gridDimensions,
-    setGrid,
+    isRunning,
     resetGrid,
+    setGrid,
+    setIsRunning,
+    setStepNumber,
+    stepNumber,
   };
 };

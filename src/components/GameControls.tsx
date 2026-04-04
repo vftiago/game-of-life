@@ -1,8 +1,8 @@
 import { Button, Flex } from "@mantine/core";
-import { memo } from "react";
-import { useBreakpoints } from "../hooks/useBreakpoints";
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
+import { memo } from "react";
 import { ScreenSize } from "../constants";
+import { useBreakpoints } from "../hooks/useBreakpoints";
 
 type GameControlsProps = {
   isRunning: boolean;
@@ -13,36 +13,36 @@ type GameControlsProps = {
 
 const GameControls = ({
   isRunning,
-  onClickPlayPause,
   onClickNext,
+  onClickPlayPause,
   onClickReset,
 }: GameControlsProps) => {
   const { width } = useBreakpoints();
 
   return (
-    <Flex align="center" justify="center" gap="1rem" p="1rem" w="100%">
+    <Flex align="center" gap="1rem" justify="center" p="1rem" w="100%">
       <Button
         size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
-        onClick={onClickReset}
         variant="gradient"
+        onClick={onClickReset}
       >
         Reset
       </Button>
       <Button
         aria-label={isRunning ? "Pause" : "Play"}
         fz={width === ScreenSize.XXS ? 10 : undefined}
-        radius="50%"
-        onClick={onClickPlayPause}
         h={width === ScreenSize.XXS ? "4rem" : "5rem"}
-        w={width === ScreenSize.XXS ? "4rem" : "5rem"}
+        radius="50%"
         variant="gradient"
+        w={width === ScreenSize.XXS ? "4rem" : "5rem"}
+        onClick={onClickPlayPause}
       >
         {isRunning ? <IconPlayerPause /> : <IconPlayerPlay />}
       </Button>
       <Button
         size={width === ScreenSize.XXS ? "compact-sm" : "sm"}
-        onClick={onClickNext}
         variant="gradient"
+        onClick={onClickNext}
       >
         Next
       </Button>
